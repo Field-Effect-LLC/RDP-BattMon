@@ -4,12 +4,13 @@ using System.Text;
 using System.Runtime.InteropServices;
 using Win32.WtsApi32;
 using System.Windows.Forms;
+using FieldEffect.Classes;
 
 /**
  * Credit:
  * https://www.codeproject.com/Articles/16374/How-to-Write-a-Terminal-Services-Add-in-in-Pure-C
  */
-namespace FieldEffect.Classes
+namespace FieldEffect.Models
 {
     public class TsClientAddIn
     {
