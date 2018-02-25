@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Runtime.InteropServices;
-using Win32.WtsApi32;
+﻿using FieldEffect.Classes;
+using FieldEffect.Interfaces;
+using System;
 using System.Windows.Forms;
-using FieldEffect.Classes;
+using Win32.WtsApi32;
 
 /**
  * Credit:
@@ -12,7 +10,7 @@ using FieldEffect.Classes;
  */
 namespace FieldEffect.Models
 {
-    public class TsClientAddIn
+    public class TsClientAddIn : ITsClientAddIn
     {
         IntPtr _channel;
         ChannelEntryPoints _entryPoints;
