@@ -73,18 +73,18 @@ namespace FieldEffect.Models
             try
             {
                 OpenChannel();
-            }
+                WriteChannel("EstimatedChargeRemaining\0");
+                reply = ReadChannel();
+                estChargeRemaining = reply.Split(',');
+                if (estChargeRemaining[0] != "EstimatedChargeRemaining")
+                    throw new Exception("Illegal reply");
+                CloseChannel();
+                return int.Parse(estChargeRemaining[1]);
+            } 
             catch (Exception e)
             {
                 return -1;
             }
-            WriteChannel("EstimatedChargeRemaining\0");
-            reply = ReadChannel();
-            estChargeRemaining = reply.Split(',');
-            if (estChargeRemaining[0] != "EstimatedChargeRemaining")
-                throw new Exception("Illegal reply");
-            CloseChannel();
-            return int.Parse(estChargeRemaining[1]);
         }
     }
 }
