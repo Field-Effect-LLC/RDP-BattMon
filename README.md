@@ -10,6 +10,8 @@ If you like to work full screen on a remote desktop connection, but you work fro
 
 ## How do I install it? ##
 
+### On the RDS Client Side ###
+
 In the future, I plan to make installation easier for less technical users.  For the time being, you need to install the following registry key:
 
 	HKEY_CURRENT_USER\Software\Microsoft\Terminal Server Client\Default\AddIns\BattMon
@@ -25,7 +27,9 @@ Alternatively, you can create a Windows registry file:
 	[HKEY_CURRENT_USER\Software\Microsoft\Terminal Server Client\Default\AddIns\BattMon]
 	"Name"="C:\\path\\to\\your\\folder\\RDS_Client_Addin_BattMon.dll"
 
-On the Remote Desktop side, you need to run the `RDS_Server_TrayApp_BattMon.exe` application (bundled separately).  Right now, this is just a Winforms window that shows the battery percentage, but in the future I would like to integrate it into the system tray.
+### On the Remote Desktop side ###
+
+You need to run the `RDS_Server_TrayApp_BattMon.exe` application (bundled separately) on the Remote Desktop side.  Right now, this is just a Winforms window that shows the battery percentage, but in the future I would like to integrate it into the system tray.
 
 
 ## Roadmap ##
