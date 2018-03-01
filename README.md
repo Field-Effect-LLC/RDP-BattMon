@@ -1,8 +1,8 @@
-# BattMon: A Microsoft RDP Client Add-In to Report Battery Life #
+# BattMon: An Add-In to Microsoft's Remote Desktop Client to Report Device Battery Life #
 
 ## What is this application? #
 
-This is a Remote Desktop Add-in (for MSTSC.exe), that will allow you to report your laptop's battery life to the terminal server.
+This is a Remote Desktop Add-in (for MSTSC.exe), that will allow you to report your laptop/tablet/device battery life to the terminal server.
 
 ## Why would I want this? ##
 
@@ -37,6 +37,10 @@ Here's my desired roadmap:
  3. Allow multiple batteries to be reported upon
     a. Right now, it just reports on the first battery it finds.  I don't know how common multiple batteries are, though, so this is low priority unless otherwise determined.
  4. Create a client-side installer to automatically add the registry entry.
+
+## :musical_note: "BattMon... da-na-na-na-na-na-na-na" ##
+
+I know :wink:
 
 ## Credit ##
 All credit for Remote Desktop Virtual Channels communication goes to:
