@@ -11,7 +11,7 @@ namespace FieldEffect.Interfaces
      * state might include battery health, etc; however, in the initial
      * implementation we'll only worry about the battery level.
      */
-    interface IBatteryInfo
+    public interface IBatteryInfo : IDisposable
     {
         /// <summary>
         /// Level of the battery, represented as a percentage

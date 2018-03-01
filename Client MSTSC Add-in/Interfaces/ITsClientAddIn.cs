@@ -8,6 +8,8 @@ namespace FieldEffect.Interfaces
     {
         event EventHandler<DataChannelEventArgs> DataChannelEvent;
 
+        ChannelEntryPoints EntryPoints { get; set; }
+
         ChannelReturnCodes Initialize();
         void VirtualChannelInitEventProc(IntPtr initHandle, ChannelEvents Event, byte[] data, int dataLength);
         void VirtualChannelOpenEvent(int openHandle, ChannelEvents Event, byte[] data, int dataLength, uint totalLength, ChannelFlags dataFlags);

@@ -9,6 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tray App For RDP-BattMon", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7A2CCCB5-A4E1-4E96-95D7-296D40D1BAA5}"
 	ProjectSection(SolutionItems) = preProject
+		Client MSTSC Add-in\Models\ITsClientAddIn.cs = Client MSTSC Add-in\Models\ITsClientAddIn.cs
 		README.md = README.md
 	EndProjectSection
 EndProject

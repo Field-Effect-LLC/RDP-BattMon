@@ -1,15 +1,15 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Win32.WtsApi32;
 
 namespace FieldEffect.Interfaces
 {
-    public interface IManagementObject : IDisposable
+    public interface IBatteryCommunicator : IDisposable
     {
-        void Get();
-        object this[string index] { get; }
+        ChannelEntryPoints EntryPoints { get; set; }
+        void Initialize();
     }
 }

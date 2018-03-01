@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace FieldEffect.Classes
 {
-    internal class Win32BatteryManagementObject : System.Management.ManagementObject, IManagementObject
+    public class Win32BatteryManagementObject : System.Management.ManagementObject, IManagementObject
     {
-        public Win32BatteryManagementObject() : base("Win32_Battery.DeviceID=\"{BATTERY_ID}\"")
+        public Win32BatteryManagementObject(string query) : base(query)
         { }
     }
 }

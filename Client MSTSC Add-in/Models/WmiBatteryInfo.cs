@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
+using System.Management;
 
 namespace FieldEffect.Models
 {
@@ -13,27 +14,60 @@ namespace FieldEffect.Models
     * In future, we may need to implement a Win32 battery meter,
     * but, for the first release, only a WMI meter is planned.
     */
-    internal class WmiBatteryInfo : IBatteryInfo, IDisposable
+    public class WmiBatteryInfo : IBatteryInfo
     {
-        private IManagementObject _batteryObject;
+        private ManagementObject _batteryObject;
+        private IWin32BatteryManagementObjectSearcher _searcher;
         private bool _isDisposed = false;
 
-        public WmiBatteryInfo(IManagementObject wmiBatteryObject)
+        public WmiBatteryInfo(IWin32BatteryManagementObjectSearcher searcher)
         {
-            _batteryObject = wmiBatteryObject;
+            _searcher = searcher;
         }
 
         private void Refresh()
         {
-            _batteryObject.Get();
+            var batteries = _searcher.Get();
+            if (batteries.Count > 0)
+            {
+                if (_batteryObject != null)
+                    _batteryObject.Dispose();
+
+                //For now, let's just get the first battery. In future
+                //maybe we will use a seriaized XML object or JSON to send 
+                //all battery info.
+                _batteryObject = batteries.Cast<ManagementObject>().First();
+            }
+        }
+
+        private TargetType GetProperty<TargetType>(string propertyName)
+        {
+            object outValue = default(TargetType);
+
+            Refresh();
+            string propertyAsString = _batteryObject[propertyName].ToString();
+            if (typeof(TargetType) == typeof(int))
+            {
+                int parsedString = 0;
+                if (int.TryParse(propertyAsString, out parsedString))
+                {
+                    //Boxing conversion
+                    outValue = parsedString;
+                }
+            }
+            if (typeof(TargetType) == typeof(String))
+            {
+                outValue = propertyAsString;
+            }
+
+            return (TargetType)outValue;
         }
 
         public int EstimatedChargeRemaining
         {
             get
             {
-                Refresh();
-                return int.Parse(_batteryObject["EstimatedChargeRemaining"].ToString());
+                return GetProperty<int>("EstimatedChargeRemaining");
             }
         }
 
@@ -42,7 +76,8 @@ namespace FieldEffect.Models
             get
             {
                 Refresh();
-                return new TimeSpan(0, 0, (int)_batteryObject["EstimatedRunTime"]);
+                var secondsRemaining = GetProperty<int>("EstimatedRunTime");
+                return new TimeSpan(0, 0, secondsRemaining);
             }
         }
 
@@ -57,7 +92,11 @@ namespace FieldEffect.Models
             {
                 if (!_isDisposed)
                 {
-                    _batteryObject.Dispose();
+                    if (_batteryObject != null)
+                        _batteryObject.Dispose();
+                    if (_searcher != null)
+                        _searcher.Dispose();
+
                     _isDisposed = true;
                 }
             }

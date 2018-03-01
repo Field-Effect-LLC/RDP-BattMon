@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace FieldEffect.Interfaces
 {
-    interface IManagementObjectSearcherFactory
+    public interface IManagementObjectSearcherFactory
     {
         ManagementObjectSearcher Create();
+
+        ManagementObjectSearcher Create(string query);
     }
 }

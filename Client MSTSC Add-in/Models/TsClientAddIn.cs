@@ -3,6 +3,7 @@ using FieldEffect.Interfaces;
 using System;
 using System.Windows.Forms;
 using Win32.WtsApi32;
+using FieldEffect.Exceptions;
 
 /**
  * Credit:
@@ -20,19 +21,24 @@ namespace FieldEffect.Models
         ChannelOpenEventDelegate _channelOpenEventDelegate = null;
         private string _serverName;
 
-        public TsClientAddIn(string channelName, ChannelEntryPoints entryPoints)
+        public ChannelEntryPoints EntryPoints
+        {
+            get { return _entryPoints; }
+            set { _entryPoints = value; }
+        }
+
+        public TsClientAddIn(string channelName)
         {
             _channelName = channelName;
 
             if (channelName.Length > 7)
             {
-                throw new ArgumentOutOfRangeException(String.Format("TsClientAddIn ({0}): Please choose a name for channelName that is 7 or fewer characters.", _channelName));
+                throw new VirtualChannelException(String.Format("TsClientAddIn ({0}): Please choose a name for channelName that is 7 or fewer characters.", _channelName));
             }
             _channelInitEventDelegate = 
                 new ChannelInitEventDelegate(VirtualChannelInitEventProc);
             _channelOpenEventDelegate =
                 new ChannelOpenEventDelegate(VirtualChannelOpenEvent);
-            _entryPoints = entryPoints;
         }
 
         public ChannelReturnCodes Initialize()
@@ -52,9 +58,7 @@ namespace FieldEffect.Models
             ChannelReturnCodes ret = _entryPoints.
                 VirtualChannelWrite(_openChannel, data, (uint)data.Length, IntPtr.Zero);
             if (ret != ChannelReturnCodes.Ok)
-                MessageBox.Show(String.Format("TsClientAddIn ({0}): Couldn't write to communcation channel for battery monitor.", _channelName),
-                    "Error", MessageBoxButtons.OK,
-                     MessageBoxIcon.Error);
+                throw new VirtualChannelException(String.Format("TsClientAddIn ({0}): Couldn't write to communcation channel for battery monitor.", _channelName));
         }
 
         public void VirtualChannelInitEventProc(IntPtr initHandle,
@@ -69,9 +73,7 @@ namespace FieldEffect.Models
                         initHandle, ref _openChannel,
                         _channelName, _channelOpenEventDelegate);
                     if (ret != ChannelReturnCodes.Ok)
-                        MessageBox.Show(String.Format("TsClientAddIn ({0}): Couldn't open communcation channel for battery monitor.", _channelName),
-                            "Error", MessageBoxButtons.OK,
-                             MessageBoxIcon.Error);
+                        throw new VirtualChannelException(String.Format("TsClientAddIn ({0}): Couldn't open communcation channel for battery monitor.", _channelName));
                     else
                     {
                         string servername = System.Text.Encoding.Unicode.GetString(data);
@@ -79,9 +81,8 @@ namespace FieldEffect.Models
                     }
                     break;
                 case ChannelEvents.V1Connected:
-                    MessageBox.Show(String.Format("TsClientAddIn ({0}): Connecting to a Terminal Server that doesn't support data communication.", _channelName),
-                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    break;
+                    throw new VirtualChannelException(String.Format("TsClientAddIn ({0}): Connecting to a Terminal Server that doesn't support data communication.", _channelName));
+
                 case ChannelEvents.Disconnected:
                     break;
                 case ChannelEvents.Terminated:

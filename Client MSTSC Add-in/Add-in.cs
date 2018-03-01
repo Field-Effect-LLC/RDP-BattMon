@@ -10,89 +10,93 @@ using FieldEffect.Classes;
 using Microsoft.Win32;
 using System.Reflection;
 using FieldEffect.Models;
+using FieldEffect.Interfaces;
+using FieldEffect.Exceptions;
+using log4net;
+using System.IO;
 
 namespace FieldEffect
 {
     class Program
     {
-        /**
-         * Main exists in order to self-register this TS Add-in.
-         */
-        static void Main(string[] args)
+        private static Lazy<ILog> _iLog = new Lazy<ILog>(() =>
         {
-            //[HKEY_CURRENT_USER\Software\Microsoft\Terminal Server Client\Default\AddIns\TSAddinInCS]
-            //"Name"="C:\\Documents and Settings\\Selvin\\Pulpit\\TSAddinInCS
-            //\\Client\\bin\\Debug\\TSAddinInCS.dll"
+            return LogManager.GetLogger(typeof(Program));
+        });
 
-            var pathToExe = Assembly.GetExecutingAssembly().Location;
-            string addinName = "BattMon";
+        private static ILog _log => _iLog.Value;
 
-            using (RegistryKey addinsKey = Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Terminal Server Client\Default\AddIns"))
-            using (RegistryKey battMonKey = addinsKey.OpenSubKey(addinName))
-            {
-                string message = String.Empty;
-                //Toggle registry key
-                if (battMonKey == null)
-                {
-                    //key doesn't exist; create it
-                    using (RegistryKey newBattMonKey = addinsKey.CreateSubKey(addinName))
-                    {
-                        newBattMonKey.SetValue("Name", pathToExe);
-                        message = "BattMon Remote Desktop Addin has been installed";
-                    }
-                }
-                else
-                {
-                    //key exists; remove it
-                    addinsKey.DeleteSubKey(addinName);
-                    message = "BattMon Remote Desktop Addin has been removed";
-                }
-                MessageBox.Show(message, "Information", MessageBoxButtons.OK);
-            }
+        private static Lazy<Program> _instance = new Lazy<Program>();
+
+        private static Lazy<string> _dllPath = new Lazy<string>(() => {
+            return Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName;
+        });
+
+        private IBatteryCommunicator batteryCommunicator = null;
+
+        ~Program()
+        {
+            //Don't GC the batteryCommunicator until the program is done
+            GC.KeepAlive(batteryCommunicator);
         }
 
+        public bool Run(ref ChannelEntryPoints entry)
+        {
+            try
+            {
+                batteryCommunicator = (IBatteryCommunicator)NinjectConfig.Instance.GetService(typeof(IBatteryCommunicator));
+                batteryCommunicator.EntryPoints = entry;
+                batteryCommunicator.Initialize();
+            }
+            catch (VirtualChannelException e)
+            {
+                //Communication problem
+                _log.Fatal(e.ToString());
+                return false;
+            }
+            catch (Ninject.ActivationException e)
+            {
+                _log.Fatal(e.ToString());
+                return false;
+            }
+            catch (Exception e)
+            {
+                _log.Fatal(e.ToString());
+                return false;
+            }
+            return true;
+        }
+        
         [DllExport("VirtualChannelEntry", CallingConvention.StdCall)]
         public static bool VirtualChannelEntry(ref ChannelEntryPoints entry)
         {
-            var clientAddIn = new TsClientAddIn("BATTMON", entry);
-            if (clientAddIn.Initialize() != ChannelReturnCodes.Ok)
+            Application.ThreadException += (s, e) => _log.Fatal(e.Exception.ToString());
+            AppDomain.CurrentDomain.UnhandledException += (s, e) => _log.Fatal(e.ExceptionObject.ToString());
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+            return _instance.Value.Run(ref entry);
+        }
+
+        private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            foreach (var file in Directory.GetFiles(_dllPath.Value))
             {
-                MessageBox.Show("RDP Battery Add-in: Initialization of communication channel for battery monitor failed.",
-                                "Error", MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
-                return false;
-            }
-
-            string data = String.Empty;
-            clientAddIn.DataChannelEvent += (s, e) =>
-            {
-                string curData;
-                if (e.DataFlags == ChannelFlags.First || e.DataFlags == ChannelFlags.Only)
+                if (file.ToLower().EndsWith("dll"))
                 {
-                    data = "";
-                }
-                if (e.Data == null)
-                    return;
-
-                curData = Encoding.UTF8.GetString(e.Data, 0, e.DataLength);
-                data = data + curData;
-
-                if (e.DataFlags == ChannelFlags.Last || e.DataFlags == ChannelFlags.Only)
-                {
-                    if (data == "EstimatedChargeRemaining\0")
+                    try
                     {
-                        Win32BatteryManagementObject obj = new Win32BatteryManagementObject();
-                        WmiBatteryInfo info = new WmiBatteryInfo(obj);
-
-                        byte[] response = Encoding.UTF8.GetBytes(String.Format("EstimatedChargeRemaining,{0}\0", info.EstimatedChargeRemaining));
-                        clientAddIn.VirtualChannelWrite(response);
-
+                        var assm = Assembly.LoadFrom(file);
+                        if (assm.FullName == args.Name)
+                        {
+                            return assm;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        _log.Debug(ex.ToString());
                     }
                 }
-                    
-            };
-
-            return true;
+            }
+            return null;
         }
     }
 }
