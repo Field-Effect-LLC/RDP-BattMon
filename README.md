@@ -25,6 +25,8 @@ Alternatively, you can create a Windows registry file:
 	[HKEY_CURRENT_USER\Software\Microsoft\Terminal Server Client\Default\AddIns\BattMon]
 	"Name"="C:\\path\\to\\your\\folder\\RDS_Client_Addin_BattMon.dll"
 
+On the Remote Desktop side, you need to run the `RDS_Server_TrayApp_BattMon.exe` application (bundled separately).  Right now, this is just a Winforms window that shows the battery percentage, but in the future I would like to integrate it into the system tray.
+
 
 ## Roadmap ##
 
