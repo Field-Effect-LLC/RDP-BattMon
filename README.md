@@ -6,7 +6,7 @@ This is a Remote Desktop Add-in (for MSTSC.exe), that will allow you to report y
 
 ## Why would I want this? ##
 
-If you like to work full screen on a remote desktop connection, but you work from a laptop, you won't have to exit full screen every time you want to check your battery life.
+If you like to work full screen on a remote desktop connection, but you work from a laptop or other battery powered device, you won't have to exit full screen every time you want to check your battery life.
 
 ## How do I install it? ##
 
