@@ -31,12 +31,12 @@ Alternatively, you can create a Windows registry file:
 Here's my desired roadmap:
 
  1. Proof-of-concept (complete)
- 2. Improve server-side battery reporting application
-    a. Pass client name to server, so app can display the client's name
-    b. Make the app display as a tray icon, instead of a Windows form, to display the battery level, just as the native battery icon would
- 3. Allow multiple batteries to be reported upon
-    a. Right now, it just reports on the first battery it finds.  I don't know how common multiple batteries are, though, so this is low priority unless otherwise determined.
- 4. Create a client-side installer to automatically add the registry entry.
+ 1. Improve server-side battery reporting application
+    1. Pass client name to server, so app can display the client's name
+    1. Make the app display as a tray icon, instead of a Windows form, to display the battery level, just as the native battery icon would
+ 1. Allow multiple batteries to be reported upon
+    1. Right now, it just reports on the first battery it finds.  I don't know how common multiple batteries are, though, so this is low priority unless otherwise determined.
+ 1. Create a client-side installer to automatically add the registry entry.
 
 ## :musical_note: "BattMon... da-na-na-na-na-na-na-na" ##
 
