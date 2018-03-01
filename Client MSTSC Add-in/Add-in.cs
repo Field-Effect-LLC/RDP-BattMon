@@ -72,10 +72,11 @@ namespace FieldEffect
         {
             Application.ThreadException += (s, e) => _log.Fatal(e.Exception.ToString());
             AppDomain.CurrentDomain.UnhandledException += (s, e) => _log.Fatal(e.ExceptionObject.ToString());
-            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+            //AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
             return _instance.Value.Run(ref entry);
         }
 
+        /*
         private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
         {
             foreach (var file in Directory.GetFiles(_dllPath.Value))
@@ -98,5 +99,6 @@ namespace FieldEffect
             }
             return null;
         }
+        */
     }
 }
