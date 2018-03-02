@@ -25,13 +25,11 @@ namespace FieldEffect.Models
 
                 reply = _channel.ReadChannel();
 
-                //Strip zero
-                //result = result.Substring(0, result.Length - 1);
-
                 //Communication expects that the last character read is a null char
                 if (!reply.EndsWith("\0"))
                     throw new VirtualChannelException("Bad response");
 
+                //Strip the zero
                 reply = reply.Substring(0, reply.Length - 1);
 
                 estChargeRemaining = reply.Split(',');
