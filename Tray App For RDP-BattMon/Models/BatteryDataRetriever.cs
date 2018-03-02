@@ -81,9 +81,10 @@ namespace FieldEffect.Models
                 CloseChannel();
                 return int.Parse(estChargeRemaining[1]);
             } 
-            catch (Exception e)
+            catch (Exception)
             {
-                return -1;
+                //Zero means we don't know what the client battery level is
+                return 0;
             }
         }
     }

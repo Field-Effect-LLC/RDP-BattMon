@@ -1,22 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using FieldEffect.Interfaces;
+using System;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using FieldEffect.Classes;
-using FieldEffect.Interfaces;
-using Win32.WtsApi32;
+using FieldEffect.VCL.Server.Interfaces;
+using FieldEffect.VCL.Server.WtsApi32;
+using FieldEffect.VCL.Server;
 
 namespace FieldEffect.Models
 {
     public class BatteryCommunicator : IBatteryCommunicator
     {
-        ITsClientAddIn _clientAddIn;
+        IRdpClientVirtualChannel _clientAddIn;
         IBatteryInfo _batteryInfo;
         string _data = String.Empty;
         private bool _isDisposed = false;
 
-        public BatteryCommunicator(ITsClientAddIn clientAddin, IBatteryInfo batteryInfo)
+        public BatteryCommunicator(IRdpClientVirtualChannel clientAddin, IBatteryInfo batteryInfo)
         {
             _clientAddIn = clientAddin;
             _batteryInfo = batteryInfo;

@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using Win32.WtsApi32;
-using System.Windows.Forms;
-using FieldEffect.Classes;
-using Microsoft.Win32;
-using System.Reflection;
-using FieldEffect.Models;
+﻿using FieldEffect.Classes;
 using FieldEffect.Interfaces;
-using FieldEffect.Exceptions;
+using FieldEffect.VCL.Exceptions;
+using FieldEffect.VCL.Server.WtsApi32;
 using log4net;
+using System;
 using System.IO;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace FieldEffect
 {

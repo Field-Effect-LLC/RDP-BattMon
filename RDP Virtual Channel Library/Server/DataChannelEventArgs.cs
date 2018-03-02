@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Win32.WtsApi32;
+﻿using FieldEffect.VCL.Server.WtsApi32;
+using System;
 
-namespace FieldEffect.Classes
+namespace FieldEffect.VCL.Server
 {
     public class DataChannelEventArgs : EventArgs
     {
