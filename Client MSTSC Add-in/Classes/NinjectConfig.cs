@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FieldEffect.Interfaces;
+﻿using FieldEffect.Interfaces;
 using FieldEffect.Models;
 using log4net;
 using Ninject;
 using Ninject.Extensions.Factory;
 using Ninject.Modules;
+using System;
+using FieldEffect.VCL.Client.Interfaces;
+using FieldEffect.VCL.Client;
 
 namespace FieldEffect.Classes
 {
@@ -41,8 +39,8 @@ namespace FieldEffect.Classes
                 .To<WmiBatteryInfo>()
                 .InSingletonScope();
 
-            KernelInstance.Bind<ITsClientAddIn>()
-                .To<TsClientAddIn>()
+            KernelInstance.Bind<IRdpClientVirtualChannel>()
+                .To<RdpClientVirtualChannel>()
                 .InSingletonScope()
                 .WithConstructorArgument("channelName", "BATTMON");
 
