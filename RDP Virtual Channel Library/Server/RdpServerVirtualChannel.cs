@@ -56,13 +56,7 @@ namespace FieldEffect.VCL.Server
                 throw new VirtualChannelException("Can't read data");
             }
 
-            //Communication expects that the last character read is a null char
-            if (buffer[bytesRead - 1] != 0)
-                throw new VirtualChannelException("Bad response");
-
             result = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-            //Strip zero
-            result = result.Substring(0, result.Length - 1);
             return result;
         }
     }

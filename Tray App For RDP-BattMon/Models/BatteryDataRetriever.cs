@@ -1,4 +1,5 @@
 ﻿using System;
+using FieldEffect.VCL.Exceptions;
 using FieldEffect.VCL.Server.Interfaces;
 
 namespace FieldEffect.Models
@@ -23,6 +24,15 @@ namespace FieldEffect.Models
                 _channel.WriteChannel("EstimatedChargeRemaining\0");
 
                 reply = _channel.ReadChannel();
+
+                //Strip zero
+                //result = result.Substring(0, result.Length - 1);
+
+                //Communication expects that the last character read is a null char
+                if (!reply.EndsWith("\0"))
+                    throw new VirtualChannelException("Bad response");
+
+                reply = reply.Substring(0, reply.Length - 1);
 
                 estChargeRemaining = reply.Split(',');
 
