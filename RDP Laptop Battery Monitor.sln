@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RDP Virtual Channel Library", "RDP Virtual Channel Library\RDP Virtual Channel Library.csproj", "{7ABB87DE-2FEE-42C3-910B-4DE4B401527A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RDP-BattMon Comm Protocol", "RDP-BattMon Comm Protocol\RDP-BattMon Comm Protocol.csproj", "{0C4ACD17-C640-4F38-ABB6-EC386489D0A6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +48,14 @@ Global
 		{7ABB87DE-2FEE-42C3-910B-4DE4B401527A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7ABB87DE-2FEE-42C3-910B-4DE4B401527A}.Release|x64.ActiveCfg = Release|Any CPU
 		{7ABB87DE-2FEE-42C3-910B-4DE4B401527A}.Release|x64.Build.0 = Release|Any CPU
+		{0C4ACD17-C640-4F38-ABB6-EC386489D0A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C4ACD17-C640-4F38-ABB6-EC386489D0A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C4ACD17-C640-4F38-ABB6-EC386489D0A6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0C4ACD17-C640-4F38-ABB6-EC386489D0A6}.Debug|x64.Build.0 = Debug|Any CPU
+		{0C4ACD17-C640-4F38-ABB6-EC386489D0A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C4ACD17-C640-4F38-ABB6-EC386489D0A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C4ACD17-C640-4F38-ABB6-EC386489D0A6}.Release|x64.ActiveCfg = Release|Any CPU
+		{0C4ACD17-C640-4F38-ABB6-EC386489D0A6}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
