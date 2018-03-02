@@ -40,16 +40,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Client\WtsApi32.cs" />
     <Compile Include="Exceptions\VirtualChannelException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server\DataChannelEventArgs.cs" />
     <Compile Include="Server\Interfaces\IRdpClientVirtualChannel.cs" />
     <Compile Include="Server\RdpClientVirtualChannel.cs" />
-    <Compile Include="Server\WtsApi.cs" />
+    <Compile Include="Server\WtsApi32.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Client\" />
     <Folder Include="Communication\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
