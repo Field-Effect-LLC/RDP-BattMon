@@ -21,5 +21,8 @@ namespace FieldEffect.Classes
 
         [DllImport("Wtsapi32.dll")]
         public static extern bool WTSVirtualChannelClose(IntPtr channelHandle);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern bool DestroyIcon(IntPtr handle);
     }
 }

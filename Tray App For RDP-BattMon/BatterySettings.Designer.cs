@@ -35,12 +35,17 @@
             this.RdpClientName = new System.Windows.Forms.Label();
             this.RdpClientBattery = new System.Windows.Forms.Label();
             this.PollTimer = new System.Windows.Forms.Timer(this.components);
+            this.TrayMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TrayMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // BatteryTray
             // 
+            this.BatteryTray.ContextMenuStrip = this.TrayMenuStrip;
             this.BatteryTray.Text = "Remote Battery Status";
             this.BatteryTray.Visible = true;
+            this.BatteryTray.DoubleClick += new System.EventHandler(this.BatteryTray_DoubleClick);
             // 
             // label1
             // 
@@ -84,6 +89,21 @@
             this.PollTimer.Interval = 10000;
             this.PollTimer.Tick += new System.EventHandler(this.PollTimer_Tick);
             // 
+            // TrayMenuStrip
+            // 
+            this.TrayMenuStrip.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.TrayMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.exitToolStripMenuItem});
+            this.TrayMenuStrip.Name = "TrayMenuStrip";
+            this.TrayMenuStrip.Size = new System.Drawing.Size(245, 84);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(244, 36);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
             // BatterySettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(192F, 192F);
@@ -94,9 +114,10 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "BatterySettings";
             this.Text = "BatterySettings";
+            this.TrayMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -110,5 +131,7 @@
         private System.Windows.Forms.Label RdpClientName;
         private System.Windows.Forms.Label RdpClientBattery;
         private System.Windows.Forms.Timer PollTimer;
+        private System.Windows.Forms.ContextMenuStrip TrayMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
     }
 }

@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace FieldEffect.Models
 {
-    class BatteryLevel
+    class BatteryDataRetriever
     {
         private string _channelName = String.Empty;
         private IntPtr _mHandle = IntPtr.Zero;
 
-        public BatteryLevel(string channelName)
+        public BatteryDataRetriever(string channelName)
         {
             _channelName = channelName;
         }
