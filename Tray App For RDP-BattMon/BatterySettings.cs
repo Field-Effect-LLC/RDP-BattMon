@@ -27,7 +27,7 @@ namespace FieldEffect
             //4,9 - 25,20
             _batteryIcon = new BatteryIcon(
                     _batteryTemplate,
-                    new Rectangle(4, 9, 21, 11),
+                    new Rectangle(4, 9, 22, 12),
                     BatteryIcon.BatteryOrientation.HorizontalL
                 );
             _batteryIcon.BatteryLevel = 0;
