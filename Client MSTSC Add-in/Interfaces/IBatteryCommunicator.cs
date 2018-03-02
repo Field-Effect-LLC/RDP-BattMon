@@ -1,4 +1,4 @@
-﻿using FieldEffect.VCL.Server.WtsApi32;
+﻿using FieldEffect.VCL.Client.WtsApi32;
 using System;
 
 namespace FieldEffect.Interfaces

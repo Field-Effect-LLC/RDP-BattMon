@@ -1,7 +1,7 @@
-﻿using FieldEffect.VCL.Server.WtsApi32;
+﻿using FieldEffect.VCL.Client.WtsApi32;
 using System;
 
-namespace FieldEffect.VCL.Server.Interfaces
+namespace FieldEffect.VCL.Client.Interfaces
 {
     public interface IRdpClientVirtualChannel
     {

@@ -40,13 +40,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Client\WtsApi32.cs" />
+    <Compile Include="Server\Interfaces\IRdpServerVirtualChannel.cs" />
+    <Compile Include="Server\RdpServerVirtualChannel.cs" />
+    <Compile Include="Server\WtsApi32.cs" />
     <Compile Include="Exceptions\VirtualChannelException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Server\DataChannelEventArgs.cs" />
-    <Compile Include="Server\Interfaces\IRdpClientVirtualChannel.cs" />
-    <Compile Include="Server\RdpClientVirtualChannel.cs" />
-    <Compile Include="Server\WtsApi32.cs" />
+    <Compile Include="Client\DataChannelEventArgs.cs" />
+    <Compile Include="Client\Interfaces\IRdpClientVirtualChannel.cs" />
+    <Compile Include="Client\RdpClientVirtualChannel.cs" />
+    <Compile Include="Client\WtsApi32.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Communication\" />

@@ -5,8 +5,8 @@ using Ninject;
 using Ninject.Extensions.Factory;
 using Ninject.Modules;
 using System;
-using FieldEffect.VCL.Server.Interfaces;
-using FieldEffect.VCL.Server;
+using FieldEffect.VCL.Client.Interfaces;
+using FieldEffect.VCL.Client;
 
 namespace FieldEffect.Classes
 {

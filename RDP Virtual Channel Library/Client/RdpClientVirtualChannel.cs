@@ -1,13 +1,13 @@
 ﻿using FieldEffect.VCL.Exceptions;
-using FieldEffect.VCL.Server.Interfaces;
-using FieldEffect.VCL.Server.WtsApi32;
+using FieldEffect.VCL.Client.Interfaces;
+using FieldEffect.VCL.Client.WtsApi32;
 using System;
 
 /**
  * Credit:
  * https://www.codeproject.com/Articles/16374/How-to-Write-a-Terminal-Services-Add-in-in-Pure-C
  */
-namespace FieldEffect.VCL.Server
+namespace FieldEffect.VCL.Client
 {
     public class RdpClientVirtualChannel : IRdpClientVirtualChannel
     {

@@ -2,9 +2,9 @@
 using System;
 using System.Linq;
 using System.Text;
-using FieldEffect.VCL.Server.Interfaces;
-using FieldEffect.VCL.Server.WtsApi32;
-using FieldEffect.VCL.Server;
+using FieldEffect.VCL.Client.Interfaces;
+using FieldEffect.VCL.Client.WtsApi32;
+using FieldEffect.VCL.Client;
 
 namespace FieldEffect.Models
 {

@@ -1,7 +1,7 @@
-﻿using FieldEffect.VCL.Server.WtsApi32;
+﻿using FieldEffect.VCL.Client.WtsApi32;
 using System;
 
-namespace FieldEffect.VCL.Server
+namespace FieldEffect.VCL.Client
 {
     public class DataChannelEventArgs : EventArgs
     {

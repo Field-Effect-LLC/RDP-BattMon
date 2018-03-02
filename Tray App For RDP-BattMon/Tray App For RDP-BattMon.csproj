@@ -94,6 +94,7 @@
     <Compile Include="BatterySettings.Designer.cs">
       <DependentUpon>BatterySettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="Classes\NativeMethods.cs" />
     <Compile Include="Classes\NinjectConfig.cs" />
     <Compile Include="Models\BatteryIcon.cs" />
     <Compile Include="Models\BatteryDataRetriever.cs" />

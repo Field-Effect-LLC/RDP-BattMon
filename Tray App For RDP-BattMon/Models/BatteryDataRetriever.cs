@@ -1,69 +1,15 @@
-﻿using FieldEffect.Classes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
+using FieldEffect.VCL.Server.Interfaces;
 
 namespace FieldEffect.Models
 {
     class BatteryDataRetriever
     {
-        private string _channelName = String.Empty;
-        private IntPtr _mHandle = IntPtr.Zero;
+        IRdpServerVirtualChannel _channel;
 
-        public BatteryDataRetriever(string channelName)
+        public BatteryDataRetriever (IRdpServerVirtualChannel channel)
         {
-            _channelName = channelName;
-        }
-
-        private void OpenChannel()
-        {
-            _mHandle = NativeMethods.WTSVirtualChannelOpen(IntPtr.Zero, -1, _channelName);
-            if (_mHandle == IntPtr.Zero)
-            {
-                throw new Exception("Can't open channel");
-            }
-        }
-
-        private void CloseChannel()
-        {
-            if (!NativeMethods.WTSVirtualChannelClose(_mHandle))
-            {
-                throw new Exception("Can't close channel");
-            }
-        }
-
-        private void WriteChannel(string message)
-        {
-            int written = 0;
-            byte[] data = Encoding.UTF8.GetBytes(message);
-            if (!NativeMethods.WTSVirtualChannelWrite(_mHandle, data, data.Length, ref written))
-            {
-                throw new Exception("Can't write data");
-            }
-            if (written != data.Length)
-            {
-                throw new Exception("Didn't write all data");
-            }
-        }
-
-        private string ReadChannel()
-        {
-            string result = String.Empty;
-            int bytesRead = 0;
-            byte[] buffer = new byte[1600];
-            if (!NativeMethods.WTSVirtualChannelRead(_mHandle, NativeMethods.INFINITE, buffer, buffer.Length, ref bytesRead))
-            {
-                throw new Exception("Can't read data");
-            }
-            if (buffer[bytesRead - 1] != 0)
-                throw new Exception("Bad response");
-
-            result = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-            //Strip zero
-            result = result.Substring(0, result.Length - 1);
-            return result;
+            _channel = channel;
         }
 
         public int Poll()
@@ -72,13 +18,19 @@ namespace FieldEffect.Models
             string[] estChargeRemaining;
             try
             {
-                OpenChannel();
-                WriteChannel("EstimatedChargeRemaining\0");
-                reply = ReadChannel();
+                _channel.OpenChannel();
+
+                _channel.WriteChannel("EstimatedChargeRemaining\0");
+
+                reply = _channel.ReadChannel();
+
                 estChargeRemaining = reply.Split(',');
+
                 if (estChargeRemaining[0] != "EstimatedChargeRemaining")
                     throw new Exception("Illegal reply");
-                CloseChannel();
+
+                _channel.CloseChannel();
+
                 return int.Parse(estChargeRemaining[1]);
             } 
             catch (Exception)

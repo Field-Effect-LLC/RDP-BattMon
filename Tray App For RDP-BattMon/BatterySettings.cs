@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using FieldEffect.VCL.Server;
 
 namespace FieldEffect
 {
@@ -22,15 +23,21 @@ namespace FieldEffect
         public BatterySettings()
         {
             InitializeComponent();
-            _batteryStatus = new BatteryDataRetriever("BATTMON");
+            var channel = new RdpServerVirtualChannel("BATTMON");
+
+            _batteryStatus = new BatteryDataRetriever(channel);
+
             _batteryTemplate = Properties.Resources.BattLevel;
+
             //4,9 - 25,20
             _batteryIcon = new BatteryIcon(
                     _batteryTemplate,
                     new Rectangle(4, 9, 22, 12),
                     BatteryIcon.BatteryOrientation.HorizontalL
-                );
-            _batteryIcon.BatteryLevel = 0;
+                )
+            {
+                BatteryLevel = 0
+            };
 
             _disposables.Add(_batteryTemplate);
 
@@ -71,7 +78,7 @@ namespace FieldEffect
             Visible = !Visible;
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
         }

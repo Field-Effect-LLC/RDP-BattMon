@@ -1,7 +1,7 @@
 ﻿using FieldEffect.Classes;
 using FieldEffect.Interfaces;
 using FieldEffect.VCL.Exceptions;
-using FieldEffect.VCL.Server.WtsApi32;
+using FieldEffect.VCL.Client.WtsApi32;
 using log4net;
 using System;
 using System.IO;
