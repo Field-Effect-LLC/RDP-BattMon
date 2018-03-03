@@ -130,6 +130,10 @@
       <Project>{7abb87de-2fee-42c3-910b-4de4b401527a}</Project>
       <Name>RDP Virtual Channel Library</Name>
     </ProjectReference>
+    <ProjectReference Include="..\RDP-BattMon Comm Protocol\RDP-BattMon Comm Protocol.csproj">
+      <Project>{0c4acd17-c640-4f38-abb6-ec386489d0a6}</Project>
+      <Name>RDP-BattMon Comm Protocol</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

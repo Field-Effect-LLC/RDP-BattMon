@@ -75,9 +75,16 @@ namespace FieldEffect.Models
         {
             get
             {
-                Refresh();
                 var secondsRemaining = GetProperty<int>("EstimatedRunTime");
                 return new TimeSpan(0, 0, secondsRemaining);
+            }
+        }
+
+        public int BatteryStatus
+        {
+            get
+            {
+                return GetProperty<int>("BatteryStatus");
             }
         }
 

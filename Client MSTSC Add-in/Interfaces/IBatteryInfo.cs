@@ -16,14 +16,8 @@ namespace FieldEffect.Interfaces
         /// <summary>
         /// Level of the battery, represented as a percentage
         /// </summary>
-        int EstimatedChargeRemaining
-        {
-            get;
-        }
-
-        TimeSpan EstimatedRunTime
-        {
-            get;
-        }
+        int EstimatedChargeRemaining { get; }
+        TimeSpan EstimatedRunTime { get; }
+        int BatteryStatus { get; }
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using FieldEffect.VCL.Client.Interfaces;
 using FieldEffect.VCL.Client.WtsApi32;
 using FieldEffect.VCL.Client;
+using FieldEffect.VCL.CommunicationProtocol;
 
 namespace FieldEffect.Models
 {
@@ -67,11 +68,30 @@ namespace FieldEffect.Models
 
             if (e.DataFlags == ChannelFlags.Last || e.DataFlags == ChannelFlags.Only)
             {
-                if (_data == "EstimatedChargeRemaining\0")
+                var request = Request.Deserialize(_data);
+                var response = new Response();
+                if (request.Value.Contains("EstimatedChargeRemaining"))
                 {
-                    byte[] response = Encoding.UTF8.GetBytes(String.Format("EstimatedChargeRemaining,{0}\0", _batteryInfo.EstimatedChargeRemaining));
-                    _clientAddIn.VirtualChannelWrite(response);
+                    response.Value.Add("EstimatedChargeRemaining", _batteryInfo.EstimatedChargeRemaining);
                 }
+
+                if (request.Value.Contains("ClientName"))
+                {
+                    response.Value.Add("ClientName", Environment.MachineName);
+                }
+
+                if (request.Value.Contains("BatteryStatus"))
+                {
+                    response.Value.Add("BatteryStatus", _batteryInfo.BatteryStatus);
+                }
+
+                if (request.Value.Contains("EstimatedRunTime"))
+                {
+                    response.Value.Add("EstimatedRunTime", _batteryInfo.EstimatedRunTime);
+                }
+
+                byte[] responseBytes = Encoding.UTF8.GetBytes(response.Serialize());
+                _clientAddIn.VirtualChannelWrite(responseBytes);
             }
         }
     }
