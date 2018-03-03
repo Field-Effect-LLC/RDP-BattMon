@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using FieldEffect.VCL.Server;
 
-namespace FieldEffect
+namespace FieldEffect.Views
 {
     public partial class BatterySettings : Form
     {

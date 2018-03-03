@@ -1,4 +1,4 @@
-﻿namespace FieldEffect
+﻿namespace FieldEffect.Views
 {
     partial class BatterySettings
     {
