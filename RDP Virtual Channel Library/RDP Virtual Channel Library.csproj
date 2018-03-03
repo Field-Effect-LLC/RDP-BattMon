@@ -50,8 +50,6 @@
     <Compile Include="Client\RdpClientVirtualChannel.cs" />
     <Compile Include="Client\WtsApi32.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Communication\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

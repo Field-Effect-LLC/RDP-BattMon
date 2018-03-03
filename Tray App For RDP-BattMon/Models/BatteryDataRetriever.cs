@@ -1,6 +1,7 @@
 ﻿using System;
 using FieldEffect.VCL.Exceptions;
 using FieldEffect.VCL.Server.Interfaces;
+using FieldEffect.VCL.CommunicationProtocol;
 
 namespace FieldEffect.Models
 {
@@ -13,39 +14,52 @@ namespace FieldEffect.Models
             _channel = channel;
         }
 
-        public int Poll()
+        private RequestedType RetrieveClientProperty<RequestedType>(string propertyName)
         {
-            string reply = "";
-            string[] estChargeRemaining;
+            var request = new Request();
+            request.Value.Add(propertyName);
             try
             {
                 _channel.OpenChannel();
 
-                _channel.WriteChannel("EstimatedChargeRemaining\0");
+                _channel.WriteChannel(request.Serialize());
 
-                reply = _channel.ReadChannel();
+                var reply = _channel.ReadChannel();
 
-                //Communication expects that the last character read is a null char
-                if (!reply.EndsWith("\0"))
-                    throw new VirtualChannelException("Bad response");
+                var response = Response.Deserialize(reply);
 
-                //Strip the zero
-                reply = reply.Substring(0, reply.Length - 1);
-
-                estChargeRemaining = reply.Split(',');
-
-                if (estChargeRemaining[0] != "EstimatedChargeRemaining")
-                    throw new Exception("Illegal reply");
+                var propertyValue = response.Value[propertyName];
 
                 _channel.CloseChannel();
 
-                return int.Parse(estChargeRemaining[1]);
-            } 
+                return (RequestedType)propertyValue;
+            }
             catch (Exception)
             {
                 //Zero means we don't know what the client battery level is
-                return 0;
+                return default(RequestedType);
             }
         }
+
+        public string ClientName
+        {
+            get { return RetrieveClientProperty<String>("ClientName"); }
+        }
+
+        public int EstimatedChargeRemaining
+        {
+            get { return (int)RetrieveClientProperty<Int64>("EstimatedChargeRemaining"); }
+        }
+
+        public string EstimatedRunTime
+        {
+            get { return RetrieveClientProperty<string>("EstimatedRunTime"); }
+        }
+
+        public int BatteryStatus
+        {
+            get { return (int)RetrieveClientProperty<Int64>("BatteryStatus"); }
+        }
+
     }
 }

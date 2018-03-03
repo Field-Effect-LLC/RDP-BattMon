@@ -69,5 +69,14 @@ namespace FieldEffect.Properties {
                 return ((System.Drawing.Icon)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://github.com/Field-Effect-LLC/RDP-BattMon.
+        /// </summary>
+        internal static string SourceCode {
+            get {
+                return ResourceManager.GetString("SourceCode", resourceCulture);
+            }
+        }
     }
 }

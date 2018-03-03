@@ -74,7 +74,7 @@ namespace FieldEffect.Models
 
             g.Clear(Color.Transparent);
             g.DrawIcon(_batteryTemplate, 0, 0);
-            using (var brush = new SolidBrush(BatteryLevel <= 10 ? Color.Red : Color.LightGray))
+            using (var brush = new SolidBrush(BatteryLevel <= 10 ? Color.Red : Color.White))
             {
                 g.FillRectangle(brush, batteryRect);
             }

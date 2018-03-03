@@ -32,6 +32,7 @@ namespace FieldEffect
         {
             //Don't GC the batteryCommunicator until the program is done
             GC.KeepAlive(batteryCommunicator);
+            _log.Info("BattMon Remote Desktop client battery reporter exited.");
         }
 
         public bool Run(ref ChannelEntryPoints entry)
@@ -64,6 +65,8 @@ namespace FieldEffect
         [DllExport("VirtualChannelEntry", CallingConvention.StdCall)]
         public static bool VirtualChannelEntry(ref ChannelEntryPoints entry)
         {
+            _log.Info("BattMon Remote Desktop client battery reporter started.");
+
             Application.ThreadException += (s, e) => _log.Fatal(e.Exception.ToString());
             AppDomain.CurrentDomain.UnhandledException += (s, e) => _log.Fatal(e.ExceptionObject.ToString());
             //AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
