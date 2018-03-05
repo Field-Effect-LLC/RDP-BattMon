@@ -42,10 +42,6 @@ namespace FieldEffect.Classes
                 .InSingletonScope()
                 .WithConstructorArgument("query", "Win32_Battery");
 
-            KernelInstance.Bind<IBatteryInfo>()
-                .To<WmiBatteryInfo>()
-                .InSingletonScope();
-
             KernelInstance.Bind<IRdpClientVirtualChannel>()
                 .To<RdpClientVirtualChannel>()
                 .InSingletonScope()
