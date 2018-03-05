@@ -26,7 +26,7 @@ namespace FieldEffect
             return Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName;
         });
 
-        private IBatteryCommunicator batteryCommunicator = null;
+        private IBatteryDataReporter batteryCommunicator = null;
 
         ~Program()
         {
@@ -39,7 +39,7 @@ namespace FieldEffect
         {
             try
             {
-                batteryCommunicator = (IBatteryCommunicator)NinjectConfig.Instance.GetService(typeof(IBatteryCommunicator));
+                batteryCommunicator = (IBatteryDataReporter)NinjectConfig.Instance.GetService(typeof(IBatteryDataReporter));
                 batteryCommunicator.EntryPoints = entry;
                 batteryCommunicator.Initialize();
 

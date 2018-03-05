@@ -8,7 +8,7 @@ using System.Text;
 
 namespace FieldEffect.Models
 {
-    public class BatteryCommunicator : IBatteryCommunicator
+    public class BatteryDataReporter : IBatteryDataReporter
     {
         IRdpClientVirtualChannel _clientAddIn;
         IBatteryInfo _batteryInfo;
@@ -16,7 +16,7 @@ namespace FieldEffect.Models
         string _data = String.Empty;
         private bool _isDisposed = false;
 
-        public BatteryCommunicator(IRdpClientVirtualChannel clientAddin, IBatteryInfo batteryInfo, IBatteryInfoFactory batteryInfoFactory)
+        public BatteryDataReporter(IRdpClientVirtualChannel clientAddin, IBatteryInfo batteryInfo, IBatteryInfoFactory batteryInfoFactory)
         {
             _clientAddIn = clientAddin;
             _batteryInfo = batteryInfo;

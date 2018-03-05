@@ -118,7 +118,7 @@
     <Compile Include="Classes\NinjectConfig.cs" />
     <Compile Include="Interfaces\IManagementObject.cs" />
     <Compile Include="Interfaces\IManagementObjectSearcherFactory.cs" />
-    <Compile Include="Models\BatteryCommunicator.cs" />
+    <Compile Include="Models\BatteryDataReporter.cs" />
     <Compile Include="Models\WmiBatteryInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

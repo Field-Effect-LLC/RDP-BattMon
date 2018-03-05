@@ -51,8 +51,8 @@ namespace FieldEffect.Classes
                 .InSingletonScope()
                 .WithConstructorArgument("channelName", "BATTMON");
 
-            KernelInstance.Bind<IBatteryCommunicator>()
-                .To<BatteryCommunicator>()
+            KernelInstance.Bind<IBatteryDataReporter>()
+                .To<BatteryDataReporter>()
                 .InSingletonScope();
 
             KernelInstance.Bind<IWin32BatteryManagementObjectSearcher>()
