@@ -111,15 +111,9 @@
     <Compile Include="Interfaces\IBatteryCommunicator.cs" />
     <Compile Include="Interfaces\IBatteryInfoFactory.cs" />
     <Compile Include="Interfaces\IBatteryDataCollector.cs" />
-    <Compile Include="Classes\Win32BatteryManagementObject.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Classes\NativeMethods.cs" />
     <Compile Include="Classes\NinjectConfig.cs" />
-    <Compile Include="Interfaces\IManagementObject.cs" />
-    <Compile Include="Interfaces\IManagementObjectSearcherFactory.cs" />
     <Compile Include="Models\BatteryDataReporter.cs" />
-    <Compile Include="Models\WmiBatteryInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
