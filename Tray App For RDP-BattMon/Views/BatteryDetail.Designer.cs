@@ -1,6 +1,6 @@
 ﻿namespace FieldEffect.Views
 {
-    partial class BatterySettings
+    partial class BatteryDetail
     {
         /// <summary>
         /// Required designer variable.
@@ -193,7 +193,7 @@
             this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "BatterySettings";
             this.Text = "BatterySettings";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BatterySettings_FormClosing);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BatteryDetail_FormClosing);
             this.TrayMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

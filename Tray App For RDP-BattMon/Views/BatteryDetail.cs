@@ -14,14 +14,14 @@ using FieldEffect.Interfaces;
 
 namespace FieldEffect.Views
 {
-    public partial class BatterySettings : Form
+    public partial class BatteryDetail : Form
     {
         private BatteryDataRetriever _batteryStatus;
         private BatteryIcon _batteryIcon;
         private Icon _batteryTemplate;
         private List<IDisposable> _disposables = new List<IDisposable>();
 
-        public BatterySettings()
+        public BatteryDetail()
         {
             InitializeComponent();
             var channel = new RdpServerVirtualChannel("BATTMON");
@@ -125,7 +125,7 @@ namespace FieldEffect.Views
             Application.Exit();
         }
 
-        private void BatterySettings_FormClosing(object sender, FormClosingEventArgs e)
+        private void BatteryDetail_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason != CloseReason.ApplicationExitCall)
                 e.Cancel = true;

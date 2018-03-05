@@ -12,7 +12,7 @@ namespace FieldEffect
     {
         static void Main(string[] args)
         {
-            Form f = new BatterySettings();
+            Form f = new BatteryDetail();
             Application.Run(f);
         }
     }
