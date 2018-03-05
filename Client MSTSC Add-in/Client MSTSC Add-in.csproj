@@ -110,7 +110,7 @@
     </Compile>
     <Compile Include="Interfaces\IBatteryCommunicator.cs" />
     <Compile Include="Interfaces\IBatteryInfoFactory.cs" />
-    <Compile Include="Interfaces\IWin32BatteryManagementObjectSearcher.cs" />
+    <Compile Include="Interfaces\IBatteryDataCollector.cs" />
     <Compile Include="Classes\Win32BatteryManagementObject.cs">
       <SubType>Component</SubType>
     </Compile>

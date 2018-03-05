@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace FieldEffect.Interfaces
 {
-    public interface IWin32BatteryManagementObjectSearcher : IDisposable
+    public interface IBatteryDataCollector : IDisposable
     {
-        ManagementObjectCollection Get();
+        //Get all batteries for the system
+        IEnumerable<IBatteryInfo> GetAllBatteries();
     }
 }

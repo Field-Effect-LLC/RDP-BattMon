@@ -18,17 +18,17 @@ namespace FieldEffect.Models
     public class WmiBatteryInfo : BatteryInfo
     {
         private ManagementObject _batteryObject;
-        private IWin32BatteryManagementObjectSearcher _searcher;
+        private IBatteryDataCollector _searcher;
         private bool _isDisposed = false;
 
-        public WmiBatteryInfo(IWin32BatteryManagementObjectSearcher searcher)
+        public WmiBatteryInfo(IBatteryDataCollector searcher)
         {
             _searcher = searcher;
         }
 
         private void Refresh()
         {
-            var batteries = _searcher.Get();
+            var batteries = _searcher.GetAllBatteries();
             if (_batteryObject != null)
                 _batteryObject.Dispose();
 

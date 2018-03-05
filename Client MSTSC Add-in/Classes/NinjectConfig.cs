@@ -55,7 +55,7 @@ namespace FieldEffect.Classes
                 .To<BatteryDataReporter>()
                 .InSingletonScope();
 
-            KernelInstance.Bind<IWin32BatteryManagementObjectSearcher>()
+            KernelInstance.Bind<IBatteryDataCollector>()
                 .To<Win32BatteryManagementObjectSearcher>()
                 .InSingletonScope()
                 .WithConstructorArgument("query", "SELECT * FROM Win32_Battery");
