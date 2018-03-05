@@ -4,6 +4,7 @@ using FieldEffect.VCL.Client.Interfaces;
 using FieldEffect.VCL.Client.WtsApi32;
 using FieldEffect.VCL.CommunicationProtocol;
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace FieldEffect.Models
@@ -11,16 +12,14 @@ namespace FieldEffect.Models
     public class BatteryDataReporter : IBatteryDataReporter
     {
         IRdpClientVirtualChannel _clientAddIn;
-        IBatteryInfo _batteryInfo;
-        IBatteryInfoFactory _batteryInfoFactory;
+        IBatteryDataCollector _batteryDataCollector;
         string _data = String.Empty;
         private bool _isDisposed = false;
 
-        public BatteryDataReporter(IRdpClientVirtualChannel clientAddin, IBatteryInfo batteryInfo, IBatteryInfoFactory batteryInfoFactory)
+        public BatteryDataReporter(IRdpClientVirtualChannel clientAddin, IBatteryDataCollector batteryDataCollector)
         {
             _clientAddIn = clientAddin;
-            _batteryInfo = batteryInfo;
-            _batteryInfoFactory = batteryInfoFactory;
+            _batteryDataCollector = batteryDataCollector;
 
             _clientAddIn.DataChannelEvent += _clientAddIn_DataChannelEvent;
         }
@@ -37,13 +36,7 @@ namespace FieldEffect.Models
             {
                 if (!_isDisposed)
                 {
-                    if (_batteryInfo != null)
-                    {
-                        //BatteryInfo may (or may not) be Disposable,
-                        //depending on the implementation.
-                        if (_batteryInfo is IDisposable disposableBattInfo)
-                            disposableBattInfo.Dispose();
-                    }
+                    
                 }
             }
         }
@@ -79,14 +72,8 @@ namespace FieldEffect.Models
 
                 if (request.Value.Contains("BatteryInfo"))
                 {
-                    BatteryInfo toSerialize = _batteryInfoFactory.Create(
-                            _batteryInfo.ClientName,
-                            _batteryInfo.EstimatedChargeRemaining,
-                            _batteryInfo.EstimatedRunTime,
-                            _batteryInfo.BatteryStatus
-                        );
-                    
-                    response.Value.Add("BatteryInfo", toSerialize);
+                    List<IBatteryInfo> batteryInfo = new List<IBatteryInfo>(_batteryDataCollector.GetAllBatteries());
+                    response.Value.Add("BatteryInfo", batteryInfo);
                 }
 
                 byte[] responseBytes = Encoding.UTF8.GetBytes(response.Serialize());
