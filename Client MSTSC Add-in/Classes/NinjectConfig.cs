@@ -33,15 +33,6 @@ namespace FieldEffect.Classes
         }
         public override void Load()
         {
-            KernelInstance.Bind<IManagementObjectSearcherFactory>()
-                .ToFactory()
-                .InSingletonScope();
-
-            KernelInstance.Bind<IManagementObject>()
-                .To<Win32BatteryManagementObject>()
-                .InSingletonScope()
-                .WithConstructorArgument("query", "Win32_Battery");
-
             KernelInstance.Bind<IRdpClientVirtualChannel>()
                 .To<RdpClientVirtualChannel>()
                 .InSingletonScope()
