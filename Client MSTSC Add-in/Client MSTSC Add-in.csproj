@@ -109,13 +109,13 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Interfaces\IBatteryCommunicator.cs" />
+    <Compile Include="Interfaces\IBatteryInfoFactory.cs" />
     <Compile Include="Interfaces\IWin32BatteryManagementObjectSearcher.cs" />
     <Compile Include="Classes\Win32BatteryManagementObject.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Classes\NativeMethods.cs" />
     <Compile Include="Classes\NinjectConfig.cs" />
-    <Compile Include="Interfaces\IBatteryInfo.cs" />
     <Compile Include="Interfaces\IManagementObject.cs" />
     <Compile Include="Interfaces\IManagementObjectSearcherFactory.cs" />
     <Compile Include="Models\BatteryCommunicator.cs" />
@@ -131,6 +131,10 @@
     <None Include="FodyWeavers.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BatteryInfo\BatteryInfo.csproj">
+      <Project>{87b0c6d6-f8ae-46f0-9af6-388b8fdbda3f}</Project>
+      <Name>BatteryInfo</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RDP Virtual Channel Library\RDP Virtual Channel Library.csproj">
       <Project>{7abb87de-2fee-42c3-910b-4de4b401527a}</Project>
       <Name>RDP Virtual Channel Library</Name>

@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using FieldEffect.VCL.Server;
+using FieldEffect.Interfaces;
 
 namespace FieldEffect.Views
 {
@@ -44,9 +45,30 @@ namespace FieldEffect.Views
             //Start with blank battery icon
             BatteryTray.Icon = _batteryTemplate;
 
-            RdpClientName.Text = _batteryStatus.ClientName;
+            UpdateData();
 
             Shown += (s, e) => Visible = false;
+        }
+
+        /// <summary>
+        /// update screen and return estimated charge remaing for battery icon.
+        /// </summary>
+        /// <returns></returns>
+        private int UpdateData()
+        {
+            try
+            {
+                IBatteryInfo batteryInfo = _batteryStatus.BatteryInfo;
+                RdpClientName.Text = batteryInfo.ClientName;
+                RdpClientBattStatus.Text = BatteryStatus(batteryInfo.BatteryStatus);
+                RdpClientEstRuntime.Text = batteryInfo.EstimatedRunTime.ToString();
+                RdpClientBattery.Text = String.Format("{0}%", batteryInfo.EstimatedChargeRemaining);
+                return batteryInfo.EstimatedChargeRemaining;
+            }
+            catch
+            {
+                return 0;
+            }
         }
 
         private string BatteryStatus(int status)
@@ -73,7 +95,7 @@ namespace FieldEffect.Views
 
         private void PollTimer_Tick(object sender, EventArgs e)
         {
-            int chargeRemaining = _batteryStatus.EstimatedChargeRemaining;
+            int chargeRemaining = UpdateData();
             _batteryIcon.BatteryLevel = chargeRemaining;
             
             Bitmap template = _batteryTemplate.ToBitmap();
@@ -91,13 +113,6 @@ namespace FieldEffect.Views
             }
 
             BatteryTray.Icon = Icon.FromHandle(hIcon); //_batteryIcon.RenderedIcon;
-            
-            RdpClientBattery.Text = String.Format("{0}%", chargeRemaining);
-
-            BatteryTray.Text = String.Format("Remote Battery: {0}%", chargeRemaining);
-
-            RdpClientEstRuntime.Text = _batteryStatus.EstimatedRunTime;
-            RdpClientBattStatus.Text = BatteryStatus(_batteryStatus.BatteryStatus);
         }
 
         private void BatteryTray_DoubleClick(object sender, EventArgs e)
@@ -121,7 +136,7 @@ namespace FieldEffect.Views
             BatteryTray.ShowBalloonTip(5000);
         }
 
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void LinkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start(Properties.Resources.SourceCode);
         }

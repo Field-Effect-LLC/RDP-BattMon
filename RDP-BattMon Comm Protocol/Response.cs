@@ -1,20 +1,24 @@
 ﻿using FieldEffect.VCL.CommunicationProtocol.Exceptions;
 using FieldEffect.VCL.CommunicationProtocol.Interfaces;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using FieldEffect.VCL.CommunicationProtocol.Helpers;
 
 namespace FieldEffect.VCL.CommunicationProtocol
 {
     [Serializable]
     public class Response : IResponse
     {
-        private Lazy<Dictionary<String, object>> _responseValue = new Lazy<Dictionary<String, object>>();
-        public Dictionary<String, object> Value { get { return _responseValue.Value; } }
+        public Dictionary<String, object> Value { get; private set; }
+
+        public Response()
+        {
+            Value = new Dictionary<String, object>();
+        }
 
         public string Serialize()
         {
-            return JsonConvert.SerializeObject(this) + '\0';
+            return Serialization.Serialize<Response>(this) + '\0';
         }
 
         public static Response Deserialize(String value)
@@ -24,7 +28,7 @@ namespace FieldEffect.VCL.CommunicationProtocol
 
             value = value.Substring(0, value.Length - 1);
 
-            return JsonConvert.DeserializeObject<Response>(value);
+            return Serialization.Deserialize<Response>(value);
         }
     }
 }
