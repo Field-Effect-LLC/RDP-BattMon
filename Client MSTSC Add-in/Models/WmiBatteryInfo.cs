@@ -14,7 +14,8 @@ namespace FieldEffect.Models
     * In future, we may need to implement a Win32 battery meter,
     * but, for the first release, only a WMI meter is planned.
     */
-    public class WmiBatteryInfo : IBatteryInfo
+    [Serializable]
+    public class WmiBatteryInfo : BatteryInfo
     {
         private ManagementObject _batteryObject;
         private IWin32BatteryManagementObjectSearcher _searcher;
@@ -28,16 +29,13 @@ namespace FieldEffect.Models
         private void Refresh()
         {
             var batteries = _searcher.Get();
-            if (batteries.Count > 0)
-            {
-                if (_batteryObject != null)
-                    _batteryObject.Dispose();
+            if (_batteryObject != null)
+                _batteryObject.Dispose();
 
-                //For now, let's just get the first battery. In future
-                //maybe we will use a seriaized XML object or JSON to send 
-                //all battery info.
-                _batteryObject = batteries.Cast<ManagementObject>().First();
-            }
+            //For now, let's just get the first battery. In future
+            //maybe we will use a seriaized XML object or JSON to send 
+            //all battery info.
+            _batteryObject = batteries.Cast<ManagementObject>().FirstOrDefault();
         }
 
         private TargetType GetProperty<TargetType>(string propertyName)
@@ -45,11 +43,14 @@ namespace FieldEffect.Models
             object outValue = default(TargetType);
 
             Refresh();
+
+            if (_batteryObject == null)
+                return default(TargetType);
+
             string propertyAsString = _batteryObject[propertyName].ToString();
             if (typeof(TargetType) == typeof(int))
             {
-                int parsedString = 0;
-                if (int.TryParse(propertyAsString, out parsedString))
+                if (int.TryParse(propertyAsString, out int parsedString))
                 {
                     //Boxing conversion
                     outValue = parsedString;
@@ -63,28 +64,56 @@ namespace FieldEffect.Models
             return (TargetType)outValue;
         }
 
-        public int EstimatedChargeRemaining
+        override public int EstimatedChargeRemaining
         {
             get
             {
-                return GetProperty<int>("EstimatedChargeRemaining");
+                EstimatedChargeRemaining = GetProperty<int>("EstimatedChargeRemaining");
+                return base.EstimatedChargeRemaining;
+            }
+            protected set
+            {
+                base.EstimatedChargeRemaining = value;
             }
         }
 
-        public TimeSpan EstimatedRunTime
+        override public TimeSpan EstimatedRunTime
         {
             get
             {
                 var secondsRemaining = GetProperty<int>("EstimatedRunTime");
-                return new TimeSpan(0, 0, secondsRemaining);
+                EstimatedRunTime = new TimeSpan(0, 0, secondsRemaining);
+                return base.EstimatedRunTime;
+            }
+            protected set
+            {
+                base.EstimatedRunTime = value;
             }
         }
 
-        public int BatteryStatus
+        override public int BatteryStatus
         {
             get
             {
-                return GetProperty<int>("BatteryStatus");
+                BatteryStatus = GetProperty<int>("BatteryStatus");
+                return base.BatteryStatus;
+            }
+            protected set
+            {
+                base.BatteryStatus = value;
+            }
+        }
+
+        public override string ClientName
+        {
+            get
+            {
+                ClientName = Environment.MachineName;
+                return base.ClientName;
+            }
+            protected set
+            {
+                base.ClientName = value;
             }
         }
 

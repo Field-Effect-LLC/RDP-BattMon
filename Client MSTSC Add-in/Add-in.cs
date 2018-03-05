@@ -42,6 +42,10 @@ namespace FieldEffect
                 batteryCommunicator = (IBatteryCommunicator)NinjectConfig.Instance.GetService(typeof(IBatteryCommunicator));
                 batteryCommunicator.EntryPoints = entry;
                 batteryCommunicator.Initialize();
+
+                //TODO: We need a good place to Dispose() of batteryCommunicator.
+                //The destructor is the wrong place, but I'm not sure how
+                //else to tell when the add-in is exiting.
             }
             catch (VirtualChannelException e)
             {

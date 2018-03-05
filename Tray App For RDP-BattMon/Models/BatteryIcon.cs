@@ -1,9 +1,13 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
+using FieldEffect.Interfaces;
 
 namespace FieldEffect.Models
 {
-    public class BatteryIcon
+    public class BatteryIcon : IBatteryIcon
     {
+        protected bool _isDisposed = false;
+
         public enum BatteryOrientation
         {
             /// <summary>
@@ -42,7 +46,9 @@ namespace FieldEffect.Models
         {
             _batteryTemplate = batteryTemplate;
             _batteryLevelMask = batteryLevelMask;
-            _renderedBattery = batteryTemplate;
+
+            //Copy the icon
+            _renderedBattery = Icon.FromHandle(batteryTemplate.Handle);
             _batteryOrientation = batteryOrientation;
         }
 
@@ -59,24 +65,62 @@ namespace FieldEffect.Models
             }
         }
 
-        public void Render(Graphics g)
+        public void Render()
         {
             Rectangle batteryRect = new Rectangle();
-            if (_batteryOrientation == BatteryOrientation.HorizontalL)
-            {
-                batteryRect = new Rectangle(
-                    _batteryLevelMask.X,
-                    _batteryLevelMask.Y,
-                    (int)(_batteryLevelMask.Width * (BatteryLevel / 100.0)),
-                    _batteryLevelMask.Height
-                );
-            }
 
-            g.Clear(Color.Transparent);
-            g.DrawIcon(_batteryTemplate, 0, 0);
-            using (var brush = new SolidBrush(BatteryLevel <= 10 ? Color.Red : Color.White))
+            using (Bitmap template = _batteryTemplate.ToBitmap())
+            using (var g = Graphics.FromImage(template))
             {
-                g.FillRectangle(brush, batteryRect);
+
+                switch (_batteryOrientation)
+                {
+                    case BatteryOrientation.HorizontalL:
+                        batteryRect = new Rectangle(
+                        _batteryLevelMask.X,
+                        _batteryLevelMask.Y,
+                        (int)(_batteryLevelMask.Width * (BatteryLevel / 100.0)),
+                        _batteryLevelMask.Height
+                    );
+                        break;
+
+                    default:
+                        throw new NotImplementedException("Only BatteryOrientation.HorizontalL is currently implemented.");
+                }
+
+                g.Clear(Color.Transparent);
+                g.DrawIcon(_batteryTemplate, 0, 0);
+                using (var brush = new SolidBrush(BatteryLevel <= 10 ? Color.Red : Color.White))
+                {
+                    g.FillRectangle(brush, batteryRect);
+
+                    if (_renderedBattery != null)
+                    {
+                        _renderedBattery.Dispose();
+                        IntPtr hIcon = template.GetHicon();
+                        _renderedBattery = Icon.FromHandle(hIcon);
+                    }
+                }
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+
+        protected void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (!_isDisposed)
+                {
+                    if (_renderedBattery != null)
+                    {
+                        _renderedBattery.Dispose();
+                    }
+                    _isDisposed = true;
+                }
             }
         }
     }

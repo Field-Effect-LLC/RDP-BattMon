@@ -14,7 +14,14 @@ namespace FieldEffect.Classes
     {
         private static Lazy<IKernel> _instance = new Lazy<IKernel>(()=>
         {
-            return new StandardKernel(new NinjectConfig());
+            var kernel = new StandardKernel(new NinjectConfig());
+
+            if (!kernel.HasModule(new FuncModule().Name))
+            {
+                kernel = new StandardKernel(new NinjectConfig(), new FuncModule());
+            }
+
+            return kernel;
         });
 
         public static IKernel Instance
@@ -52,6 +59,10 @@ namespace FieldEffect.Classes
                 .To<Win32BatteryManagementObjectSearcher>()
                 .InSingletonScope()
                 .WithConstructorArgument("query", "SELECT * FROM Win32_Battery");
+
+            KernelInstance.Bind<IBatteryInfoFactory>()
+                .ToFactory()
+                .InSingletonScope();
 
             KernelInstance.Bind<ILog>().ToMethod(context =>
                 LogManager.GetLogger(context.Request.Target.Member.ReflectedType));

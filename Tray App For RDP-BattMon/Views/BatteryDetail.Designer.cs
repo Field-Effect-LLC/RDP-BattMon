@@ -1,6 +1,6 @@
-﻿namespace FieldEffect
+﻿namespace FieldEffect.Views
 {
-    partial class BatterySettings
+    partial class BatteryDetail
     {
         /// <summary>
         /// Required designer variable.
@@ -172,7 +172,7 @@
             this.linkLabel1.TabIndex = 9;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "GitHub Project Page";
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel1_LinkClicked);
             // 
             // BatterySettings
             // 
@@ -193,7 +193,7 @@
             this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "BatterySettings";
             this.Text = "BatterySettings";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BatterySettings_FormClosing);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BatteryDetail_FormClosing);
             this.TrayMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

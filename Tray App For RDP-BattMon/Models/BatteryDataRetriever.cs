@@ -2,16 +2,25 @@
 using FieldEffect.VCL.Exceptions;
 using FieldEffect.VCL.Server.Interfaces;
 using FieldEffect.VCL.CommunicationProtocol;
+using FieldEffect.Interfaces;
 
 namespace FieldEffect.Models
 {
-    class BatteryDataRetriever
+    public class BatteryDataRetriever : IBatteryDataRetriever
     {
         IRdpServerVirtualChannel _channel;
 
         public BatteryDataRetriever (IRdpServerVirtualChannel channel)
         {
             _channel = channel;
+        }
+
+        public IBatteryInfo BatteryInfo
+        {
+            get
+            {
+                return RetrieveClientProperty<BatteryInfo>("BatteryInfo");
+            }
         }
 
         private RequestedType RetrieveClientProperty<RequestedType>(string propertyName)
@@ -40,26 +49,5 @@ namespace FieldEffect.Models
                 return default(RequestedType);
             }
         }
-
-        public string ClientName
-        {
-            get { return RetrieveClientProperty<String>("ClientName"); }
-        }
-
-        public int EstimatedChargeRemaining
-        {
-            get { return (int)RetrieveClientProperty<Int64>("EstimatedChargeRemaining"); }
-        }
-
-        public string EstimatedRunTime
-        {
-            get { return RetrieveClientProperty<string>("EstimatedRunTime"); }
-        }
-
-        public int BatteryStatus
-        {
-            get { return (int)RetrieveClientProperty<Int64>("BatteryStatus"); }
-        }
-
     }
 }

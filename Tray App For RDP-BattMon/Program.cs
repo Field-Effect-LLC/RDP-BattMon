@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FieldEffect.Classes;
+using FieldEffect.Interfaces;
 using System.Windows.Forms;
 
 namespace FieldEffect
@@ -11,8 +8,10 @@ namespace FieldEffect
     {
         static void Main(string[] args)
         {
-            Form f = new BatterySettings();
-            Application.Run(f);
+            using (var presenter = (IBatteryDetailPresenter)NinjectConfig.Instance.GetService(typeof(IBatteryDetailPresenter)))
+            { 
+                Application.Run((Form)presenter.BatteryDetailView);
+            }
         }
     }
 }

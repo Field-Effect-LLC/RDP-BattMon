@@ -1,6 +1,6 @@
 ﻿using FieldEffect.VCL.CommunicationProtocol.Exceptions;
+using FieldEffect.VCL.CommunicationProtocol.Helpers;
 using FieldEffect.VCL.CommunicationProtocol.Interfaces;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
@@ -9,12 +9,16 @@ namespace FieldEffect.VCL.CommunicationProtocol
     [Serializable]
     public class Request : IRequest
     {
-        private Lazy<List<String>> _requestValue = new Lazy<List<string>>();
-        public List<String> Value { get { return _requestValue.Value; } }
+        public List<String> Value { get; private set; }
+
+        public Request()
+        {
+            Value = new List<String>();
+        }
 
         public string Serialize()
         {
-            return JsonConvert.SerializeObject(this) + '\0';
+            return Serialization.Serialize<Request>(this) + '\0';
         }
 
         public static Request Deserialize(String value)
@@ -24,7 +28,7 @@ namespace FieldEffect.VCL.CommunicationProtocol
 
             value = value.Substring(0, value.Length - 1);
 
-            return JsonConvert.DeserializeObject<Request>(value);
+            return Serialization.Deserialize<Request>(value);
         }
     }
 }
