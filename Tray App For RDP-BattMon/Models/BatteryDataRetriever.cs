@@ -6,7 +6,7 @@ using FieldEffect.Interfaces;
 
 namespace FieldEffect.Models
 {
-    class BatteryDataRetriever
+    public class BatteryDataRetriever : IBatteryDataRetriever
     {
         IRdpServerVirtualChannel _channel;
 

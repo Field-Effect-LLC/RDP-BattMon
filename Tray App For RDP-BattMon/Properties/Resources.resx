@@ -121,7 +121,22 @@
   <data name="BattLevel" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\BattLevel.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="MinimizedMessage" xml:space="preserve">
+    <value>The BattMon remote battery monitor is still running in the background.  To exit, right-click on this icon, and choose "Exit".</value>
+  </data>
+  <data name="MinimizedTitle" xml:space="preserve">
+    <value>BattMon has been minimized</value>
+  </data>
+  <data name="RemoteBatteryText" xml:space="preserve">
+    <value>Remote Battery: {0}%</value>
+  </data>
+  <data name="RemoteBatteryUnknown" xml:space="preserve">
+    <value>Remote Batt Level Unknown</value>
+  </data>
   <data name="SourceCode" xml:space="preserve">
     <value>https://github.com/Field-Effect-LLC/RDP-BattMon</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Unknown</value>
   </data>
 </root>

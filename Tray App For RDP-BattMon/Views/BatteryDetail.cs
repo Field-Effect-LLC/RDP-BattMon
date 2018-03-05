@@ -14,105 +14,70 @@ using FieldEffect.Interfaces;
 
 namespace FieldEffect.Views
 {
-    public partial class BatteryDetail : Form
+    public partial class BatteryDetail : Form, IBatteryDetail
     {
-        private BatteryDataRetriever _batteryStatus;
-        private BatteryIcon _batteryIcon;
-        private Icon _batteryTemplate;
-        private List<IDisposable> _disposables = new List<IDisposable>();
+        public event EventHandler<EventArgs> RequestBatteryUpdate;
+        public event EventHandler<FormClosingEventArgs> RequestClose;
 
         public BatteryDetail()
         {
             InitializeComponent();
-            var channel = new RdpServerVirtualChannel("BATTMON");
-
-            _batteryStatus = new BatteryDataRetriever(channel);
-
-            _batteryTemplate = Properties.Resources.BattLevel;
-
-            //4,9 - 25,20
-            _batteryIcon = new BatteryIcon(
-                    _batteryTemplate,
-                    new Rectangle(5, 10, 20, 10),
-                    BatteryIcon.BatteryOrientation.HorizontalL
-                )
-            {
-                BatteryLevel = 0
-            };
-
-            _disposables.Add(_batteryTemplate);
-
-            //Start with blank battery icon
-            BatteryTray.Icon = _batteryTemplate;
-
-            UpdateData();
-
             Shown += (s, e) => Visible = false;
         }
 
-        /// <summary>
-        /// update screen and return estimated charge remaing for battery icon.
-        /// </summary>
-        /// <returns></returns>
-        private int UpdateData()
+        public Icon BatteryTrayIcon
         {
-            try
+            get { return BatteryTray.Icon; }
+            set { BatteryTray.Icon = value; }
+        }
+
+        public NotifyIcon BatteryTrayControl
+        {
+            get { return BatteryTray; }
+        }
+
+        public String BatteryStatus
+        {
+            get { return RdpClientBattStatus.Text;  }
+            set { RdpClientBattStatus.Text = value; }
+        }
+
+        public String ClientEstRuntime
+        {
+            get { return RdpClientEstRuntime.Text; }
+            set { RdpClientEstRuntime.Text = value; }
+        }
+
+        public String ClientName
+        {
+            get { return RdpClientName.Text; }
+            set { RdpClientName.Text = value; }
+        }
+
+        private int _estimatedChargeRemaining = 0;
+        public int EstimatedChargeRemaining
+        {
+            get { return _estimatedChargeRemaining; }
+            set
             {
-                IBatteryInfo batteryInfo = _batteryStatus.BatteryInfo;
-                RdpClientName.Text = batteryInfo.ClientName;
-                RdpClientBattStatus.Text = BatteryStatus(batteryInfo.BatteryStatus);
-                RdpClientEstRuntime.Text = batteryInfo.EstimatedRunTime.ToString();
-                RdpClientBattery.Text = String.Format("{0}%", batteryInfo.EstimatedChargeRemaining);
-                return batteryInfo.EstimatedChargeRemaining;
-            }
-            catch
-            {
-                return 0;
+                _estimatedChargeRemaining = value;
+                RdpClientBattery.Text = String.Format("{0}%", _estimatedChargeRemaining);
             }
         }
 
-        private string BatteryStatus(int status)
+        protected void OnRequestBatteryData(EventArgs args)
         {
+            RequestBatteryUpdate?.Invoke(this, args);
+        }
 
-            return new Dictionary<int, String>()
-            {
-                { 0, "Unknown"                    },
-                { 1, "Discharging"                },
-                { 2, "Unknown"                    },
-                { 3, "Fully Charged"              },
-                { 4, "Low"                        },
-                { 5, "Critical"                   },
-                { 6, "Charging"                   },
-                { 7, "Charging and High"          },
-                { 8, "Charging and Low"           },
-                { 9, "Charging and Critical"      },
-                { 10, "Undefined"                 },
-                { 11, "Partially Charged"         }
-            }[status];
-
-            
+        protected void OnRequestClose(FormClosingEventArgs args)
+        {
+            RequestClose?.Invoke(this, args);
         }
 
         private void PollTimer_Tick(object sender, EventArgs e)
         {
-            int chargeRemaining = UpdateData();
-            _batteryIcon.BatteryLevel = chargeRemaining;
-            
-            Bitmap template = _batteryTemplate.ToBitmap();
-            using (var g = Graphics.FromImage(template))
-            {
-                _batteryIcon.Render(g);
-            }
-
-            IntPtr hIcon = template.GetHicon();
-
-            if (BatteryTray.Icon != null && !_batteryTemplate.Equals(BatteryTray.Icon))
-            {
-                NativeMethods.DestroyIcon(BatteryTray.Icon.Handle);
-                BatteryTray.Icon.Dispose();
-            }
-
-            BatteryTray.Icon = Icon.FromHandle(hIcon); //_batteryIcon.RenderedIcon;
+            OnRequestBatteryData(EventArgs.Empty);
         }
 
         private void BatteryTray_DoubleClick(object sender, EventArgs e)
@@ -127,13 +92,7 @@ namespace FieldEffect.Views
 
         private void BatteryDetail_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (e.CloseReason != CloseReason.ApplicationExitCall)
-                e.Cancel = true;
-
-            Visible = false;
-            BatteryTray.BalloonTipTitle = "BattMon has been minimized";
-            BatteryTray.BalloonTipText = "The BattMon remote battery monitor is still running in the background.  To exit, right-click on this icon, and choose \"Exit\".";
-            BatteryTray.ShowBalloonTip(5000);
+            OnRequestClose(e);
         }
 
         private void LinkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

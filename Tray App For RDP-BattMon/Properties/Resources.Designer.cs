@@ -71,11 +71,56 @@ namespace FieldEffect.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The BattMon remote battery monitor is still running in the background.  To exit, right-click on this icon, and choose &quot;Exit&quot;..
+        /// </summary>
+        internal static string MinimizedMessage {
+            get {
+                return ResourceManager.GetString("MinimizedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BattMon has been minimized.
+        /// </summary>
+        internal static string MinimizedTitle {
+            get {
+                return ResourceManager.GetString("MinimizedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remote Battery: {0}%.
+        /// </summary>
+        internal static string RemoteBatteryText {
+            get {
+                return ResourceManager.GetString("RemoteBatteryText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remote Batt Level Unknown.
+        /// </summary>
+        internal static string RemoteBatteryUnknown {
+            get {
+                return ResourceManager.GetString("RemoteBatteryUnknown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to https://github.com/Field-Effect-LLC/RDP-BattMon.
         /// </summary>
         internal static string SourceCode {
             get {
                 return ResourceManager.GetString("SourceCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown.
+        /// </summary>
+        internal static string Unknown {
+            get {
+                return ResourceManager.GetString("Unknown", resourceCulture);
             }
         }
     }
