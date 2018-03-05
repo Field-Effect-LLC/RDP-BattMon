@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FieldEffect.Exceptions
+namespace FieldEffect.VCL.Exceptions
 {
     public class VirtualChannelException : Exception
     {

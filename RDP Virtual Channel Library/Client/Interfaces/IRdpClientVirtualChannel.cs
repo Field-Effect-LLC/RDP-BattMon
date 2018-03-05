@@ -1,10 +1,9 @@
-﻿using System;
-using FieldEffect.Classes;
-using Win32.WtsApi32;
+﻿using FieldEffect.VCL.Client.WtsApi32;
+using System;
 
-namespace FieldEffect.Interfaces
+namespace FieldEffect.VCL.Client.Interfaces
 {
-    public interface ITsClientAddIn
+    public interface IRdpClientVirtualChannel
     {
         event EventHandler<DataChannelEventArgs> DataChannelEvent;
 

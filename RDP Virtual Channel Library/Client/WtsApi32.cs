@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
  * Credit:
  * https://www.codeproject.com/Articles/16374/How-to-Write-a-Terminal-Services-Add-in-in-Pure-C
  */
-namespace Win32
+namespace FieldEffect.VCL.Client
 {
     namespace WtsApi32
     {

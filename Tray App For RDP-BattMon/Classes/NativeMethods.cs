@@ -1,25 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace FieldEffect.Classes
 {
     internal static class NativeMethods
     {
-        public const uint INFINITE = 0xFFFFFFFF;
-
-        [DllImport("Wtsapi32.dll")]
-        public static extern IntPtr WTSVirtualChannelOpen(IntPtr server,
-        int sessionId, [MarshalAs(UnmanagedType.LPStr)] string virtualName);
-
-        [DllImport("Wtsapi32.dll", SetLastError = true)]
-        public static extern bool WTSVirtualChannelWrite(IntPtr channelHandle,
-               byte[] buffer, int length, ref int bytesWritten);
-
-        [DllImport("Wtsapi32.dll", SetLastError = true)]
-        public static extern bool WTSVirtualChannelRead(IntPtr channelHandle,
-               uint timeOut, byte[] buffer, int length, ref int bytesReaded);
-
-        [DllImport("Wtsapi32.dll")]
-        public static extern bool WTSVirtualChannelClose(IntPtr channelHandle);
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern bool DestroyIcon(IntPtr handle);
     }
 }

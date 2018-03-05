@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using Win32.WtsApi32;
-using System.Windows.Forms;
-using FieldEffect.Classes;
-using Microsoft.Win32;
-using System.Reflection;
-using FieldEffect.Models;
+﻿using FieldEffect.Classes;
 using FieldEffect.Interfaces;
-using FieldEffect.Exceptions;
+using FieldEffect.VCL.Exceptions;
+using FieldEffect.VCL.Client.WtsApi32;
 using log4net;
+using System;
 using System.IO;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace FieldEffect
 {
@@ -38,6 +32,7 @@ namespace FieldEffect
         {
             //Don't GC the batteryCommunicator until the program is done
             GC.KeepAlive(batteryCommunicator);
+            _log.Info("BattMon Remote Desktop client battery reporter exited.");
         }
 
         public bool Run(ref ChannelEntryPoints entry)
@@ -47,6 +42,10 @@ namespace FieldEffect
                 batteryCommunicator = (IBatteryCommunicator)NinjectConfig.Instance.GetService(typeof(IBatteryCommunicator));
                 batteryCommunicator.EntryPoints = entry;
                 batteryCommunicator.Initialize();
+
+                //TODO: We need a good place to Dispose() of batteryCommunicator.
+                //The destructor is the wrong place, but I'm not sure how
+                //else to tell when the add-in is exiting.
             }
             catch (VirtualChannelException e)
             {
@@ -70,12 +69,15 @@ namespace FieldEffect
         [DllExport("VirtualChannelEntry", CallingConvention.StdCall)]
         public static bool VirtualChannelEntry(ref ChannelEntryPoints entry)
         {
+            _log.Info("BattMon Remote Desktop client battery reporter started.");
+
             Application.ThreadException += (s, e) => _log.Fatal(e.Exception.ToString());
             AppDomain.CurrentDomain.UnhandledException += (s, e) => _log.Fatal(e.ExceptionObject.ToString());
-            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+            //AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
             return _instance.Value.Run(ref entry);
         }
 
+        /*
         private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
         {
             foreach (var file in Directory.GetFiles(_dllPath.Value))
@@ -98,5 +100,6 @@ namespace FieldEffect
             }
             return null;
         }
+        */
     }
 }

@@ -1,25 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using FieldEffect.Interfaces;
+using FieldEffect.VCL.Client;
+using FieldEffect.VCL.Client.Interfaces;
+using FieldEffect.VCL.Client.WtsApi32;
+using FieldEffect.VCL.CommunicationProtocol;
+using System;
 using System.Text;
-using System.Threading.Tasks;
-using FieldEffect.Classes;
-using FieldEffect.Interfaces;
-using Win32.WtsApi32;
 
 namespace FieldEffect.Models
 {
     public class BatteryCommunicator : IBatteryCommunicator
     {
-        ITsClientAddIn _clientAddIn;
+        IRdpClientVirtualChannel _clientAddIn;
         IBatteryInfo _batteryInfo;
+        IBatteryInfoFactory _batteryInfoFactory;
         string _data = String.Empty;
         private bool _isDisposed = false;
 
-        public BatteryCommunicator(ITsClientAddIn clientAddin, IBatteryInfo batteryInfo)
+        public BatteryCommunicator(IRdpClientVirtualChannel clientAddin, IBatteryInfo batteryInfo, IBatteryInfoFactory batteryInfoFactory)
         {
             _clientAddIn = clientAddin;
             _batteryInfo = batteryInfo;
+            _batteryInfoFactory = batteryInfoFactory;
 
             _clientAddIn.DataChannelEvent += _clientAddIn_DataChannelEvent;
         }
@@ -37,7 +38,12 @@ namespace FieldEffect.Models
                 if (!_isDisposed)
                 {
                     if (_batteryInfo != null)
-                        _batteryInfo.Dispose();
+                    {
+                        //BatteryInfo may (or may not) be Disposable,
+                        //depending on the implementation.
+                        if (_batteryInfo is IDisposable disposableBattInfo)
+                            disposableBattInfo.Dispose();
+                    }
                 }
             }
         }
@@ -68,11 +74,23 @@ namespace FieldEffect.Models
 
             if (e.DataFlags == ChannelFlags.Last || e.DataFlags == ChannelFlags.Only)
             {
-                if (_data == "EstimatedChargeRemaining\0")
+                var request = Request.Deserialize(_data);
+                var response = new Response();
+
+                if (request.Value.Contains("BatteryInfo"))
                 {
-                    byte[] response = Encoding.UTF8.GetBytes(String.Format("EstimatedChargeRemaining,{0}\0", _batteryInfo.EstimatedChargeRemaining));
-                    _clientAddIn.VirtualChannelWrite(response);
+                    BatteryInfo toSerialize = _batteryInfoFactory.Create(
+                            _batteryInfo.ClientName,
+                            _batteryInfo.EstimatedChargeRemaining,
+                            _batteryInfo.EstimatedRunTime,
+                            _batteryInfo.BatteryStatus
+                        );
+                    
+                    response.Value.Add("BatteryInfo", toSerialize);
                 }
+
+                byte[] responseBytes = Encoding.UTF8.GetBytes(response.Serialize());
+                _clientAddIn.VirtualChannelWrite(responseBytes);
             }
         }
     }

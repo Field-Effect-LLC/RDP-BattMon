@@ -1,17 +1,15 @@
-﻿using FieldEffect.Classes;
-using FieldEffect.Interfaces;
+﻿using FieldEffect.VCL.Exceptions;
+using FieldEffect.VCL.Client.Interfaces;
+using FieldEffect.VCL.Client.WtsApi32;
 using System;
-using System.Windows.Forms;
-using Win32.WtsApi32;
-using FieldEffect.Exceptions;
 
 /**
  * Credit:
  * https://www.codeproject.com/Articles/16374/How-to-Write-a-Terminal-Services-Add-in-in-Pure-C
  */
-namespace FieldEffect.Models
+namespace FieldEffect.VCL.Client
 {
-    public class TsClientAddIn : ITsClientAddIn
+    public class RdpClientVirtualChannel : IRdpClientVirtualChannel
     {
         IntPtr _channel;
         ChannelEntryPoints _entryPoints;
@@ -27,7 +25,7 @@ namespace FieldEffect.Models
             set { _entryPoints = value; }
         }
 
-        public TsClientAddIn(string channelName)
+        public RdpClientVirtualChannel(string channelName)
         {
             _channelName = channelName;
 

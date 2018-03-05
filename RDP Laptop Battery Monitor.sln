@@ -9,9 +9,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tray App For RDP-BattMon", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7A2CCCB5-A4E1-4E96-95D7-296D40D1BAA5}"
 	ProjectSection(SolutionItems) = preProject
-		Client MSTSC Add-in\Models\ITsClientAddIn.cs = Client MSTSC Add-in\Models\ITsClientAddIn.cs
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RDP Virtual Channel Library", "RDP Virtual Channel Library\RDP Virtual Channel Library.csproj", "{7ABB87DE-2FEE-42C3-910B-4DE4B401527A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RDP-BattMon Comm Protocol", "RDP-BattMon Comm Protocol\RDP-BattMon Comm Protocol.csproj", "{0C4ACD17-C640-4F38-ABB6-EC386489D0A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BatteryInfo", "BatteryInfo\BatteryInfo.csproj", "{87B0C6D6-F8AE-46F0-9AF6-388B8FDBDA3F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +42,30 @@ Global
 		{C4352571-79E6-45FA-B32F-57EABC7EB948}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C4352571-79E6-45FA-B32F-57EABC7EB948}.Release|x64.ActiveCfg = Release|x64
 		{C4352571-79E6-45FA-B32F-57EABC7EB948}.Release|x64.Build.0 = Release|x64
+		{7ABB87DE-2FEE-42C3-910B-4DE4B401527A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7ABB87DE-2FEE-42C3-910B-4DE4B401527A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7ABB87DE-2FEE-42C3-910B-4DE4B401527A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7ABB87DE-2FEE-42C3-910B-4DE4B401527A}.Debug|x64.Build.0 = Debug|Any CPU
+		{7ABB87DE-2FEE-42C3-910B-4DE4B401527A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7ABB87DE-2FEE-42C3-910B-4DE4B401527A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7ABB87DE-2FEE-42C3-910B-4DE4B401527A}.Release|x64.ActiveCfg = Release|Any CPU
+		{7ABB87DE-2FEE-42C3-910B-4DE4B401527A}.Release|x64.Build.0 = Release|Any CPU
+		{0C4ACD17-C640-4F38-ABB6-EC386489D0A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C4ACD17-C640-4F38-ABB6-EC386489D0A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C4ACD17-C640-4F38-ABB6-EC386489D0A6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0C4ACD17-C640-4F38-ABB6-EC386489D0A6}.Debug|x64.Build.0 = Debug|Any CPU
+		{0C4ACD17-C640-4F38-ABB6-EC386489D0A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C4ACD17-C640-4F38-ABB6-EC386489D0A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C4ACD17-C640-4F38-ABB6-EC386489D0A6}.Release|x64.ActiveCfg = Release|Any CPU
+		{0C4ACD17-C640-4F38-ABB6-EC386489D0A6}.Release|x64.Build.0 = Release|Any CPU
+		{87B0C6D6-F8AE-46F0-9AF6-388B8FDBDA3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87B0C6D6-F8AE-46F0-9AF6-388B8FDBDA3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87B0C6D6-F8AE-46F0-9AF6-388B8FDBDA3F}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{87B0C6D6-F8AE-46F0-9AF6-388B8FDBDA3F}.Debug|x64.Build.0 = Debug|Any CPU
+		{87B0C6D6-F8AE-46F0-9AF6-388B8FDBDA3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87B0C6D6-F8AE-46F0-9AF6-388B8FDBDA3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87B0C6D6-F8AE-46F0-9AF6-388B8FDBDA3F}.Release|x64.ActiveCfg = Release|Any CPU
+		{87B0C6D6-F8AE-46F0-9AF6-388B8FDBDA3F}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
