@@ -61,6 +61,15 @@ namespace FieldEffect.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Battery #{0}.
+        /// </summary>
+        internal static string BatteryName {
+            get {
+                return ResourceManager.GetString("BatteryName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon BattLevel {
@@ -85,6 +94,25 @@ namespace FieldEffect.Properties {
         internal static string MinimizedTitle {
             get {
                 return ResourceManager.GetString("MinimizedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon NoBatt {
+            get {
+                object obj = ResourceManager.GetObject("NoBatt", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No remote batteries found..
+        /// </summary>
+        internal static string NoBattFound {
+            get {
+                return ResourceManager.GetString("NoBattFound", resourceCulture);
             }
         }
         

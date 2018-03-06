@@ -1,9 +1,10 @@
 ﻿using FieldEffect.Interfaces;
+using System.Collections.Generic;
 
 namespace FieldEffect.Interfaces
 {
     public interface IBatteryDataRetriever
     {
-        IBatteryInfo BatteryInfo { get; }
+        IEnumerable<IBatteryInfo> BatteryInfo { get; }
     }
 }

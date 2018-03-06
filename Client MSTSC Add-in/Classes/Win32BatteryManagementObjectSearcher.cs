@@ -57,6 +57,7 @@ namespace FieldEffect.Classes
                         ConvertValue<TimeSpan>(battery["EstimatedRunTime"].ToString()),
                         ConvertValue<int>(battery["BatteryStatus"].ToString())
                     );
+                batteryInfoList.Add(batteryInfo);
                 battery.Dispose();
             }
             return batteryInfoList;

@@ -15,14 +15,18 @@ namespace FieldEffect.Presenters
         private IBatteryDataRetriever _batteryDataRetriever;
         private IBatteryIcon _batteryIcon;
         private bool _isDisposed = false;
+        private IBatteryParametersFactory _batteryParametersFactory;
 
         public IBatteryDetail BatteryDetailView { get; set; }
 
-        public BatteryDetailPresenter(IBatteryDataRetriever batteryDataRetriever, IBatteryIcon batteryIcon, IBatteryDetail batteryDetailView)
+        public BatteryDetailPresenter(IBatteryDataRetriever batteryDataRetriever, IBatteryIcon batteryIcon, IBatteryDetail batteryDetailView, IBatteryParametersFactory batteryParametersFactory)
         {
             _batteryDataRetriever = batteryDataRetriever;
             _batteryIcon = batteryIcon;
+            _batteryParametersFactory = batteryParametersFactory;
+
             BatteryDetailView = batteryDetailView;
+
             WireEvents();
 
             //Render the battery right away
@@ -74,30 +78,45 @@ namespace FieldEffect.Presenters
 
         private void RenderBattery()
         {
-            IBatteryInfo batteryInfo = _batteryDataRetriever.BatteryInfo;
-            if (batteryInfo != null)
+            List<IBatteryInfo> batteryInfo = new List<IBatteryInfo>(_batteryDataRetriever.BatteryInfo);
+
+            //TODO: Count() method is probably going to be slow. Rethink the Batteries::IEnumerable?
+            if (batteryInfo.Count != BatteryDetailView.Batteries.Count())
             {
-                BatteryDetailView.BatteryStatus = BatteryStatus(batteryInfo.BatteryStatus);
-                BatteryDetailView.ClientEstRuntime = batteryInfo.EstimatedRunTime.ToString();
-                BatteryDetailView.EstimatedChargeRemaining = batteryInfo.EstimatedChargeRemaining;
-                BatteryDetailView.ClientName = batteryInfo.ClientName;
-                BatteryDetailView.BatteryTrayControl.Text = String.Format(Properties.Resources.RemoteBatteryText, batteryInfo.EstimatedChargeRemaining);
-                _batteryIcon.BatteryLevel = batteryInfo.EstimatedChargeRemaining;
+                //Dispose of existing
+                BatteryDetailView.ClearBatteries();
+                foreach (var battery in batteryInfo)
+                {
+                    BatteryDetailView.AddBattery(_batteryParametersFactory.Create());
+                }
+            }
+
+            int i = 0; double totalBattery = 0; double totalPercent = 0;
+            foreach (var battery in BatteryDetailView.Batteries)
+            {
+                battery.BatteryStatus = BatteryStatus(batteryInfo[i].BatteryStatus);
+                battery.ClientEstRuntime = batteryInfo[i].EstimatedRunTime.ToString();
+                battery.EstimatedChargeRemaining = batteryInfo[i].EstimatedChargeRemaining;
+                battery.BatteryName = String.Format(Properties.Resources.BatteryName, i+1);
+                totalBattery += batteryInfo[i].EstimatedChargeRemaining;
+                totalPercent += 100;
+                i++;
+            }
+
+            if (batteryInfo.Count > 0)
+            {
+                int estCharge = (int)((totalBattery / totalPercent) * 100.0);
+                BatteryDetailView.ClientName = batteryInfo[0].ClientName;
+                BatteryDetailView.TotalEstimatedCharge = estCharge;
+                BatteryDetailView.BatteryTrayControl.Text = String.Format(Properties.Resources.RemoteBatteryText, estCharge);
+                _batteryIcon.BatteryLevel = estCharge;
                 _batteryIcon.Render();
                 BatteryDetailView.BatteryTrayIcon = _batteryIcon.RenderedIcon;
             }
             else
             {
-                
-                BatteryDetailView.BatteryStatus = BatteryStatus(0);
-                BatteryDetailView.ClientEstRuntime = Properties.Resources.Unknown;
-                BatteryDetailView.EstimatedChargeRemaining = 0;
-                BatteryDetailView.ClientName = Properties.Resources.Unknown;
-
-                BatteryDetailView.BatteryTrayControl.Text = Properties.Resources.RemoteBatteryUnknown;
-                _batteryIcon.BatteryLevel = 0;
-                _batteryIcon.Render();
-                BatteryDetailView.BatteryTrayIcon = _batteryIcon.RenderedIcon;
+                BatteryDetailView.ClientName = Properties.Resources.NoBattFound;
+                BatteryDetailView.BatteryTrayIcon = Properties.Resources.NoBatt;
             }
         }
 

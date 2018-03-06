@@ -19,6 +19,11 @@ namespace FieldEffect.Views
         public event EventHandler<EventArgs> RequestBatteryUpdate;
         public event EventHandler<FormClosingEventArgs> RequestClose;
 
+        protected Lazy<List<IBatteryParameters>> _batteryParameters =
+            new Lazy<List<IBatteryParameters>>();
+
+        protected int _totalEstimatedCharge = 0;
+
         public BatteryDetail()
         {
             InitializeComponent();
@@ -28,24 +33,16 @@ namespace FieldEffect.Views
         public Icon BatteryTrayIcon
         {
             get { return BatteryTray.Icon; }
-            set { BatteryTray.Icon = value; }
+            set
+            {
+                BatteryTray.Icon = value;
+                Icon = value;
+            }
         }
 
         public NotifyIcon BatteryTrayControl
         {
             get { return BatteryTray; }
-        }
-
-        public String BatteryStatus
-        {
-            get { return RdpClientBattStatus.Text;  }
-            set { RdpClientBattStatus.Text = value; }
-        }
-
-        public String ClientEstRuntime
-        {
-            get { return RdpClientEstRuntime.Text; }
-            set { RdpClientEstRuntime.Text = value; }
         }
 
         public String ClientName
@@ -54,20 +51,45 @@ namespace FieldEffect.Views
             set { RdpClientName.Text = value; }
         }
 
-        private int _estimatedChargeRemaining = 0;
-        public int EstimatedChargeRemaining
+        public IEnumerable<IBatteryParameters> Batteries
         {
-            get { return _estimatedChargeRemaining; }
-            set
+            get
             {
-                _estimatedChargeRemaining = value;
-                RdpClientBattery.Text = String.Format("{0}%", _estimatedChargeRemaining);
+                //return _batteryParameters.Value;
+                foreach (var control in BatteryDetailPanel.Controls)
+                {
+                    if (control is IBatteryParameters)
+                        yield return (IBatteryParameters)control;
+                }
             }
+        }
+        public void ClearBatteries()
+        {
+            foreach(var battery in Batteries)
+            {
+                BatteryDetailPanel.Controls.Remove((Control)battery);
+                battery.Dispose();
+            }
+        }
+        public void AddBattery(IBatteryParameters parametersView)
+        {
+            var battView = (Control)parametersView;
+            BatteryDetailPanel.Controls.Add(battView);
         }
 
         protected void OnRequestBatteryData(EventArgs args)
         {
             RequestBatteryUpdate?.Invoke(this, args);
+        }
+
+        public int TotalEstimatedCharge
+        {
+            get { return _totalEstimatedCharge; }
+            set
+            {
+                _totalEstimatedCharge = value;
+                RdpTotalEstCharge.Text = String.Format("{0}%", _totalEstimatedCharge);
+            }
         }
 
         protected void OnRequestClose(FormClosingEventArgs args)
