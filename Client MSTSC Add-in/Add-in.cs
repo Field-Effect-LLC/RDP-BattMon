@@ -26,12 +26,12 @@ namespace FieldEffect
             return Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName;
         });
 
-        private IBatteryCommunicator batteryCommunicator = null;
+        private IBatteryDataReporter batteryReporter = null;
 
         ~Program()
         {
             //Don't GC the batteryCommunicator until the program is done
-            GC.KeepAlive(batteryCommunicator);
+            GC.KeepAlive(batteryReporter);
             _log.Info("BattMon Remote Desktop client battery reporter exited.");
         }
 
@@ -39,9 +39,9 @@ namespace FieldEffect
         {
             try
             {
-                batteryCommunicator = (IBatteryCommunicator)NinjectConfig.Instance.GetService(typeof(IBatteryCommunicator));
-                batteryCommunicator.EntryPoints = entry;
-                batteryCommunicator.Initialize();
+                batteryReporter = (IBatteryDataReporter)NinjectConfig.Instance.GetService(typeof(IBatteryDataReporter));
+                batteryReporter.EntryPoints = entry;
+                batteryReporter.Initialize();
 
                 //TODO: We need a good place to Dispose() of batteryCommunicator.
                 //The destructor is the wrong place, but I'm not sure how

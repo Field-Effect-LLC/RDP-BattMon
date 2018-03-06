@@ -90,6 +90,7 @@
   <ItemGroup>
     <Compile Include="Classes\NativeMethods.cs" />
     <Compile Include="Classes\NinjectConfig.cs" />
+    <Compile Include="Interfaces\IBatteryParametersFactory.cs" />
     <Compile Include="Models\BatteryIcon.cs" />
     <Compile Include="Models\BatteryDataRetriever.cs" />
     <Compile Include="Interfaces\IBatteryDataRetriever.cs" />
@@ -110,6 +111,13 @@
       <DependentUpon>BatteryDetail.cs</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\IBatteryDetail.cs" />
+    <Compile Include="Views\BatteryParameters.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\BatteryParameters.Designer.cs">
+      <DependentUpon>BatteryParameters.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\IBatteryParameters.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -121,6 +129,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\BatteryDetail.resx">
       <DependentUpon>BatteryDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BatteryParameters.resx">
+      <DependentUpon>BatteryParameters.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -146,6 +157,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Events\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\NoBatt.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UnkBatt.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

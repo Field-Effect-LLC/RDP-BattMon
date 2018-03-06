@@ -3,7 +3,7 @@ using System;
 
 namespace FieldEffect.Interfaces
 {
-    public interface IBatteryCommunicator : IDisposable
+    public interface IBatteryDataReporter : IDisposable
     {
         ChannelEntryPoints EntryPoints { get; set; }
         void Initialize();
