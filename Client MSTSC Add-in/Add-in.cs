@@ -76,30 +76,5 @@ namespace FieldEffect
             //AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
             return _instance.Value.Run(ref entry);
         }
-
-        /*
-        private static Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
-        {
-            foreach (var file in Directory.GetFiles(_dllPath.Value))
-            {
-                if (file.ToLower().EndsWith("dll"))
-                {
-                    try
-                    {
-                        var assm = Assembly.LoadFrom(file);
-                        if (assm.FullName == args.Name)
-                        {
-                            return assm;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        _log.Debug(ex.ToString());
-                    }
-                }
-            }
-            return null;
-        }
-        */
     }
 }
