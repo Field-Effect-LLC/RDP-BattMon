@@ -20,8 +20,16 @@ namespace FieldEffect.Models
         {
             get
             {
-                var batteryInfo = RetrieveClientProperty<IEnumerable<IBatteryInfo>>("BatteryInfo");
-                return batteryInfo;
+                try
+                {
+                    var batteryInfo = RetrieveClientProperty<IEnumerable<IBatteryInfo>>("BatteryInfo");
+                    return batteryInfo;
+                }
+                catch
+                {
+                    //Return empty list
+                    return new List<IBatteryInfo>();
+                }
             }
         }
 
@@ -29,27 +37,20 @@ namespace FieldEffect.Models
         {
             var request = new Request();
             request.Value.Add(propertyName);
-            try
-            {
-                _channel.OpenChannel();
 
-                _channel.WriteChannel(request.Serialize());
+            _channel.OpenChannel();
 
-                var reply = _channel.ReadChannel();
+            _channel.WriteChannel(request.Serialize());
 
-                var response = Response.Deserialize(reply);
+            var reply = _channel.ReadChannel();
 
-                var propertyValue = response.Value[propertyName];
+            var response = Response.Deserialize(reply);
 
-                _channel.CloseChannel();
+            var propertyValue = response.Value[propertyName];
 
-                return (RequestedType)propertyValue;
-            }
-            catch (Exception)
-            {
-                //Zero means we don't know what the client battery level is
-                return default(RequestedType);
-            }
+            _channel.CloseChannel();
+
+            return (RequestedType)propertyValue;
         }
     }
 }
