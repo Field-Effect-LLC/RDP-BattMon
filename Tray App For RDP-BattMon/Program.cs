@@ -8,8 +8,9 @@ namespace FieldEffect
     {
         static void Main(string[] args)
         {
+            Logger.Initialize();
             using (var presenter = (IBatteryDetailPresenter)NinjectConfig.Instance.GetService(typeof(IBatteryDetailPresenter)))
-            { 
+            {
                 Application.Run((Form)presenter.BatteryDetailView);
             }
         }

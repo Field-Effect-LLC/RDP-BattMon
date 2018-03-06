@@ -4,6 +4,9 @@ using FieldEffect.VCL.Server.Interfaces;
 using FieldEffect.VCL.CommunicationProtocol;
 using FieldEffect.Interfaces;
 using System.Collections.Generic;
+using FieldEffect.Classes;
+using log4net;
+using System.Reflection;
 
 namespace FieldEffect.Models
 {
@@ -43,6 +46,9 @@ namespace FieldEffect.Models
             _channel.WriteChannel(request.Serialize());
 
             var reply = _channel.ReadChannel();
+
+            LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType).Debug(reply);
+            //Logger.GetLogger().Debug(reply);
 
             var response = Response.Deserialize(reply);
 
