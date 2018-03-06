@@ -73,7 +73,6 @@ namespace FieldEffect
 
             Application.ThreadException += (s, e) => _log.Fatal(e.Exception.ToString());
             AppDomain.CurrentDomain.UnhandledException += (s, e) => _log.Fatal(e.ExceptionObject.ToString());
-            //AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
             return _instance.Value.Run(ref entry);
         }
     }
