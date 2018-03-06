@@ -3,6 +3,7 @@ using FieldEffect.VCL.Exceptions;
 using FieldEffect.VCL.Server.Interfaces;
 using FieldEffect.VCL.CommunicationProtocol;
 using FieldEffect.Interfaces;
+using System.Collections.Generic;
 
 namespace FieldEffect.Models
 {
@@ -15,11 +16,12 @@ namespace FieldEffect.Models
             _channel = channel;
         }
 
-        public IBatteryInfo BatteryInfo
+        public IEnumerable<IBatteryInfo> BatteryInfo
         {
             get
             {
-                return RetrieveClientProperty<BatteryInfo>("BatteryInfo");
+                var batteryInfo = RetrieveClientProperty<IEnumerable<IBatteryInfo>>("BatteryInfo");
+                return batteryInfo;
             }
         }
 

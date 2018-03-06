@@ -9,6 +9,7 @@ using Ninject;
 using Ninject.Modules;
 using System;
 using System.Drawing;
+using Ninject.Extensions.Factory;
 
 namespace FieldEffect.Classes
 {
@@ -16,7 +17,14 @@ namespace FieldEffect.Classes
     {
         private static Lazy<IKernel> _instance = new Lazy<IKernel>(()=>
         {
-            return new StandardKernel(new NinjectConfig());
+            var kernel = new StandardKernel(new NinjectConfig());
+
+            if (!kernel.HasModule(new FuncModule().Name))
+            {
+                kernel = new StandardKernel(new NinjectConfig(), new FuncModule());
+            }
+
+            return kernel;
         });
 
         public static IKernel Instance
@@ -28,6 +36,13 @@ namespace FieldEffect.Classes
         }
         public override void Load()
         {
+            KernelInstance.Bind<IBatteryParameters>()
+                .To<BatteryParameters>();
+
+            KernelInstance.Bind<IBatteryParametersFactory>()
+                .ToFactory()
+                .InSingletonScope();
+
             KernelInstance.Bind<IBatteryDetailPresenter>()
                 .To<BatteryDetailPresenter>()
                 .InSingletonScope();
