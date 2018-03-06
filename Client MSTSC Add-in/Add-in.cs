@@ -15,7 +15,10 @@ namespace FieldEffect
     {
         private static Lazy<ILog> _iLog = new Lazy<ILog>(() =>
         {
-            return LogManager.GetLogger(typeof(Program));
+            Logger.Initialize();
+
+            var log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+            return log;
         });
 
         private static ILog _log => _iLog.Value;

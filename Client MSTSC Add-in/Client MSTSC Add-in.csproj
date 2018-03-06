@@ -105,6 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Add-in.cs" />
+    <Compile Include="Classes\Logger.cs" />
     <Compile Include="Classes\Win32BatteryManagementObjectSearcher.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -118,7 +119,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="log4net.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
