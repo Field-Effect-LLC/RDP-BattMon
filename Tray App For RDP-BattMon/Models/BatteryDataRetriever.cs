@@ -22,7 +22,7 @@ namespace FieldEffect.Models
             {
                 try
                 {
-                    var batteryInfo = RetrieveClientProperty<IEnumerable<IBatteryInfo>>("BatteryInfo");
+                    var batteryInfo = RetrieveClientProperty<List<BatteryInfo>>("BatteryInfo");
                     return batteryInfo;
                 }
                 catch

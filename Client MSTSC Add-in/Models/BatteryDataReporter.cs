@@ -6,6 +6,7 @@ using FieldEffect.VCL.CommunicationProtocol;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace FieldEffect.Models
 {
@@ -72,7 +73,7 @@ namespace FieldEffect.Models
 
                 if (request.Value.Contains("BatteryInfo"))
                 {
-                    List<IBatteryInfo> batteryInfo = new List<IBatteryInfo>(_batteryDataCollector.GetAllBatteries());
+                    List<BatteryInfo> batteryInfo = new List<BatteryInfo>(_batteryDataCollector.GetAllBatteries().Cast<BatteryInfo>());
                     response.Value.Add("BatteryInfo", batteryInfo);
                 }
 
