@@ -51,6 +51,9 @@ namespace FieldEffect.Classes
                 .ToFactory()
                 .InSingletonScope();
 
+            KernelInstance.Bind<Program>()
+                .ToSelf();
+
             KernelInstance.Bind<ILog>().ToMethod(context =>
                 LogManager.GetLogger(context.Request.Target.Member.ReflectedType));
 
