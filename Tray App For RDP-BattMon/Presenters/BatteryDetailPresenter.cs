@@ -95,7 +95,7 @@ namespace FieldEffect.Presenters
             foreach (var battery in BatteryDetailView.Batteries)
             {
                 battery.BatteryStatus = BatteryStatus(batteryInfo[i].BatteryStatus);
-                battery.ClientEstRuntime = batteryInfo[i].EstimatedRunTime.ToString();
+                battery.ClientEstRuntime = new TimeSpan(0,0,batteryInfo[i].EstimatedRunTime).ToString();
                 battery.EstimatedChargeRemaining = batteryInfo[i].EstimatedChargeRemaining;
                 battery.BatteryName = String.Format(Properties.Resources.BatteryName, i+1);
                 totalBattery += batteryInfo[i].EstimatedChargeRemaining;

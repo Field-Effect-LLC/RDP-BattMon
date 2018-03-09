@@ -10,6 +10,6 @@ namespace FieldEffect.Interfaces
     public interface IBatteryInfoFactory
     {
         BatteryInfo Create(string clientName, int estimatedChargeRemaining,
-            TimeSpan estimatedRunTime, int batteryStatus);
+            int estimatedRunTime, int batteryStatus);
     }
 }

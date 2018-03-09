@@ -13,18 +13,18 @@ namespace FieldEffect
         public BatteryInfo()
         { }
         public BatteryInfo(string clientName, int estimatedChargeRemaining, 
-            TimeSpan estimatedRunTime, int batteryStatus)
+            int estimatedRunTime, int batteryStatus)
         {
             ClientName = clientName;
             EstimatedChargeRemaining = estimatedChargeRemaining;
             EstimatedRunTime = estimatedRunTime;
             BatteryStatus = batteryStatus;
         }
-        virtual public string ClientName { get; protected set; }
-        virtual public int EstimatedChargeRemaining { get; protected set; }
+        virtual public string ClientName { get; set; }
+        virtual public int EstimatedChargeRemaining { get; set; }
 
-        virtual public TimeSpan EstimatedRunTime { get; protected set; }
+        virtual public int EstimatedRunTime { get; set; }
 
-        virtual public int BatteryStatus { get; protected set; }
+        virtual public int BatteryStatus { get; set; }
     }
 }

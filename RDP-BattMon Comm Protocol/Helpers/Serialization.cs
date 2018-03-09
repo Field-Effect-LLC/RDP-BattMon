@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using Polenter.Serialization;
+using Newtonsoft.Json;
 
 namespace FieldEffect.VCL.CommunicationProtocol.Helpers
 {
@@ -12,28 +12,20 @@ namespace FieldEffect.VCL.CommunicationProtocol.Helpers
     {
         public static string Serialize<SerializableType>(object serializableObject)
         {
-            using (MemoryStream memoryStream = new MemoryStream())
-            using (TextReader stringReader = new StreamReader(memoryStream))
+            return JsonConvert.SerializeObject(serializableObject, new JsonSerializerSettings
             {
-                SharpSerializer serializer = new SharpSerializer(false);
-                serializer.Serialize(serializableObject, memoryStream);
-                memoryStream.Flush();
-                memoryStream.Position = 0;
-                return stringReader.ReadToEnd();
-            }
+                TypeNameHandling = TypeNameHandling.All,
+                TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Full
+            });
         }
 
         public static SerializableType Deserialize<SerializableType>(string serializedObject)
-        {
-            SharpSerializer serializer = new SharpSerializer(false);
-            using (MemoryStream memoryStream = new MemoryStream())
-            using (TextWriter stringWriter = new StreamWriter(memoryStream))
+        { 
+            return JsonConvert.DeserializeObject<SerializableType>(serializedObject, new JsonSerializerSettings
             {
-                stringWriter.Write(serializedObject);
-                stringWriter.Flush();
-                memoryStream.Position = 0;
-                return (SerializableType)serializer.Deserialize(memoryStream);
-            }
+                TypeNameHandling = TypeNameHandling.All,
+                TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Full
+            });
         }
     }
 }
