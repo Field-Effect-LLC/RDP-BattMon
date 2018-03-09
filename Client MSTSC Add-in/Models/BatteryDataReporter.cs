@@ -73,7 +73,7 @@ namespace FieldEffect.Models
 
                 if (request.Value.Contains("BatteryInfo"))
                 {
-                    List<BatteryInfo> batteryInfo = new List<BatteryInfo>(_batteryDataCollector.GetAllBatteries().Cast<BatteryInfo>());
+                    List<IBatteryInfo> batteryInfo = new List<IBatteryInfo>(_batteryDataCollector.GetAllBatteries());
                     response.Value.Add("BatteryInfo", batteryInfo);
                 }
 

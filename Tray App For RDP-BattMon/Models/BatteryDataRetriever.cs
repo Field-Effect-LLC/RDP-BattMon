@@ -22,7 +22,7 @@ namespace FieldEffect.Models
             {
                 try
                 {
-                    var batteryInfo = RetrieveClientProperty<List<BatteryInfo>>("BatteryInfo");
+                    var batteryInfo = RetrieveBatteryInfoFromClient();
                     return batteryInfo;
                 }
                 catch
@@ -33,10 +33,10 @@ namespace FieldEffect.Models
             }
         }
 
-        private RequestedType RetrieveClientProperty<RequestedType>(string propertyName)
+        private List<IBatteryInfo> RetrieveBatteryInfoFromClient()
         {
             var request = new Request();
-            request.Value.Add(propertyName);
+            request.Value.Add("BatteryInfo");
 
             _channel.OpenChannel();
 
@@ -46,11 +46,11 @@ namespace FieldEffect.Models
 
             var response = Response.Deserialize(reply);
 
-            var propertyValue = response.Value[propertyName];
+            var propertyValue = (List<IBatteryInfo>)response.Value["BatteryInfo"];
 
             _channel.CloseChannel();
 
-            return (RequestedType)propertyValue;
+            return propertyValue;
         }
     }
 }

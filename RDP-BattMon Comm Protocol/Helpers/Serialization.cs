@@ -14,14 +14,18 @@ namespace FieldEffect.VCL.CommunicationProtocol.Helpers
         {
             return JsonConvert.SerializeObject(serializableObject, new JsonSerializerSettings
             {
-                TypeNameHandling = TypeNameHandling.Auto,
-                TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple
+                TypeNameHandling = TypeNameHandling.All,
+                TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Full
             });
         }
 
         public static SerializableType Deserialize<SerializableType>(string serializedObject)
         { 
-            return JsonConvert.DeserializeObject<SerializableType>(serializedObject);
+            return JsonConvert.DeserializeObject<SerializableType>(serializedObject, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.All,
+                TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Full
+            });
         }
     }
 }

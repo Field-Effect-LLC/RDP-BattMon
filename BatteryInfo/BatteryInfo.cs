@@ -20,11 +20,11 @@ namespace FieldEffect
             EstimatedRunTime = estimatedRunTime;
             BatteryStatus = batteryStatus;
         }
-        virtual public string ClientName { get; protected set; }
-        virtual public int EstimatedChargeRemaining { get; protected set; }
+        virtual public string ClientName { get; set; }
+        virtual public int EstimatedChargeRemaining { get; set; }
 
-        virtual public int EstimatedRunTime { get; protected set; }
+        virtual public int EstimatedRunTime { get; set; }
 
-        virtual public int BatteryStatus { get; protected set; }
+        virtual public int BatteryStatus { get; set; }
     }
 }
