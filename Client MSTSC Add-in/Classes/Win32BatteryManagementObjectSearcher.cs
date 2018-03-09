@@ -53,9 +53,9 @@ namespace FieldEffect.Classes
             {
                 var batteryInfo = _batteryInfoFactory.Create(
                         Environment.MachineName,
-                        ConvertValue<int>(battery["EstimatedChargeRemaining"].ToString()),
-                        ConvertValue<TimeSpan>(battery["EstimatedRunTime"].ToString()),
-                        ConvertValue<int>(battery["BatteryStatus"].ToString())
+                        ConvertValue<int>(battery["EstimatedChargeRemaining"]?.ToString() ?? "0"),
+                        ConvertValue<int>(battery["EstimatedRunTime"]?.ToString() ?? "0"),
+                        ConvertValue<int>(battery["BatteryStatus"]?.ToString() ?? "0")
                     );
                 batteryInfoList.Add(batteryInfo);
                 battery.Dispose();

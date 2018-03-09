@@ -6,6 +6,7 @@ using FieldEffect.VCL.CommunicationProtocol;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace FieldEffect.Models
 {

@@ -36,6 +36,9 @@ namespace FieldEffect.Classes
         }
         public override void Load()
         {
+            KernelInstance.Bind<IBatteryInfo>()
+                .To<BatteryInfo>();
+
             KernelInstance.Bind<IBatteryParameters>()
                 .To<BatteryParameters>();
 
