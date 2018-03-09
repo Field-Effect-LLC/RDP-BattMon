@@ -29,19 +29,24 @@ Alternatively, you can create a Windows registry file:
 
 ### On the Remote Desktop side ###
 
-You need to run the `RDS_Server_TrayApp_BattMon.exe` application (bundled separately) on the Remote Desktop side.  Right now, this is just a Winforms window that shows the battery percentage, but in the future I would like to integrate it into the system tray.
+You need to run the `RDS_Server_TrayApp_BattMon.exe` application (bundled separately) on the Remote Desktop side.  When it's running in your remote desktop session, you should see a battery icon in your system tray:
 
+![taskbar_screenshot](https://raw.githubusercontent.com/Field-Effect-LLC/RDP-BattMon/master/taskbar-screenshot.png)
+
+## Screenshot ##
+
+![server_battery](https://raw.githubusercontent.com/Field-Effect-LLC/RDP-BattMon/master/37193691-ff51fee2-2338-11e8-8492-477d6f39c868.png)
 
 ## Roadmap ##
 
 Here's my desired roadmap:
 
  1. Proof-of-concept (complete)
- 1. Improve server-side battery reporting application
-    1. Pass client name to server, so app can display the client's name
-    1. Make the app display as a tray icon, instead of a Windows form, to display the battery level, just as the native battery icon would
- 1. Allow multiple batteries to be reported upon
-    1. Right now, it just reports on the first battery it finds.  I don't know how common multiple batteries are, though, so this is low priority unless otherwise determined.
+ 1. Improve server-side battery reporting application (complete)
+    1. Pass client name to server, so app can display the client's name (complete)
+    1. Make the app display as a tray icon, instead of a Windows form, to display the battery level, just as the native battery icon would (complete)
+ 1. Allow multiple batteries to be reported upon (complete)
+    1. Right now, it just reports on the first battery it finds.  I don't know how common multiple batteries are, though, so this is low priority unless otherwise determined. (complete)
  1. Create a client-side installer to automatically add the registry entry.
 
 ## :musical_note: "BattMon... da-na-na-na-na-na-na-na" ##
