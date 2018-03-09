@@ -151,4 +151,16 @@
   <data name="UnkBatt" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\UnkBatt.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="DebugMsgReceivedBattInfo" xml:space="preserve">
+    <value>Received Battery Info.  Serialized Response: {0}</value>
+  </data>
+  <data name="DebugMsgRequestingBattInfo" xml:space="preserve">
+    <value>Requesting Battery Info.  Serialized Request: {0}</value>
+  </data>
+  <data name="InfoMsgBattMonExit" xml:space="preserve">
+    <value>BattMon server-side component exiting.</value>
+  </data>
+  <data name="InfoMsgBattMonStart" xml:space="preserve">
+    <value>BattMon server-side component has started.</value>
+  </data>
 </root>

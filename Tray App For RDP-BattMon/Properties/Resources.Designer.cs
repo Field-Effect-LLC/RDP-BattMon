@@ -80,6 +80,42 @@ namespace FieldEffect.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Received Battery Info.  Serialized Response: {0}.
+        /// </summary>
+        internal static string DebugMsgReceivedBattInfo {
+            get {
+                return ResourceManager.GetString("DebugMsgReceivedBattInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Requesting Battery Info.  Serialized Request: {0}.
+        /// </summary>
+        internal static string DebugMsgRequestingBattInfo {
+            get {
+                return ResourceManager.GetString("DebugMsgRequestingBattInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BattMon server-side component exiting..
+        /// </summary>
+        internal static string InfoMsgBattMonExit {
+            get {
+                return ResourceManager.GetString("InfoMsgBattMonExit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BattMon server-side component has started..
+        /// </summary>
+        internal static string InfoMsgBattMonStart {
+            get {
+                return ResourceManager.GetString("InfoMsgBattMonStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The BattMon remote battery monitor is still running in the background.  To exit, right-click on this icon, and choose &quot;Exit&quot;..
         /// </summary>
         internal static string MinimizedMessage {
@@ -140,6 +176,16 @@ namespace FieldEffect.Properties {
         internal static string SourceCode {
             get {
                 return ResourceManager.GetString("SourceCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon UnkBatt {
+            get {
+                object obj = ResourceManager.GetObject("UnkBatt", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         

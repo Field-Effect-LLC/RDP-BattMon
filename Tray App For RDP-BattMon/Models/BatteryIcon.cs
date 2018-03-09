@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using FieldEffect.Interfaces;
+using log4net;
 
 namespace FieldEffect.Models
 {
@@ -35,6 +36,7 @@ namespace FieldEffect.Models
         private Icon _renderedBattery;
         private Rectangle _batteryLevelMask;
         private BatteryOrientation _batteryOrientation;
+        private ILog _log;
 
         /// <summary>
         /// Constructor
@@ -42,10 +44,11 @@ namespace FieldEffect.Models
         /// <param name="batteryTemplate">An icon containing the main artwork for the battery</param>
         /// <param name="batteryLevelMask">A rectangle on the template that we will draw the battery level in</param>
         /// <param name="batteryOrientation">The orientation of the battery icon</param>
-        public BatteryIcon(Icon batteryTemplate, Rectangle batteryLevelMask, BatteryOrientation batteryOrientation)
+        public BatteryIcon(ILog log, Icon batteryTemplate, Rectangle batteryLevelMask, BatteryOrientation batteryOrientation)
         {
             _batteryTemplate = batteryTemplate;
             _batteryLevelMask = batteryLevelMask;
+            _log = log;
 
             //Copy the icon
             _renderedBattery = Icon.FromHandle(batteryTemplate.Handle);
