@@ -10,6 +10,8 @@ If you like to work full screen on a remote desktop connection, but you work fro
 
 ## How do I install it? ##
 
+Please check the [Releases](releases) page for binary files, or build from source using Visual Studio 2017.
+
 ### On the RDS Client Side ###
 
 In the future, I plan to make installation easier for less technical users.  For the time being, you need to install the following registry key:
@@ -29,7 +31,7 @@ Alternatively, you can create a Windows registry file:
 
 ### On the Remote Desktop side ###
 
-You need to run the `RDS_Server_TrayApp_BattMon.exe` application (bundled separately) on the Remote Desktop side.  When it's running in your remote desktop session, you should see a battery icon in your system tray:
+You need to run the `RDS_Server_TrayApp_BattMon.exe` application on the Remote Desktop side.  When it's running, you should see a battery icon on your Remote Desktop's taskbar:
 
 ![taskbar_screenshot](https://raw.githubusercontent.com/Field-Effect-LLC/RDP-BattMon/master/taskbar-screenshot.png)
 
