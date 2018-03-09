@@ -10,7 +10,7 @@ If you like to work full screen on a remote desktop connection, but you work fro
 
 ## How do I install it? ##
 
-Please check the [Releases](releases) page for binary files, or build from source using Visual Studio 2017.
+Please check the [Releases](./releases) page for binary files, or build from source using Visual Studio 2017.
 
 ### On the RDS Client Side ###
 
