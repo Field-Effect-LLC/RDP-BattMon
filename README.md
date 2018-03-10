@@ -45,7 +45,7 @@ By default, logs are stored in `%APPDATA%\BattMon\Log.txt`, but they need to be 
 
 ### Enable Logging on the Client Side ###
 
-The client won't begin logging until there is a file called `log4net.config` in the same folder as your client-side DLL.  Create a new text file with that name, and paste [this](https://github.com/Field-Effect-LLC/RDP-BattMon/blob/master/Client%20MSTSC%20Add-in/log4net.config) code into it.
+The client won't begin logging until there is a file called `log4net.config` in the same folder as your client-side DLL.  Create a new text file with that name, and paste [this](Client%20MSTSC%20Add-in/log4net.config) code into it.
 
 Then, change this line:
 ```
@@ -60,7 +60,7 @@ Once that's done, you can connect to the server using your Remote Desktop client
 
 ### Enable Logging on the Server Side ###
 
-On the server side, you need a configuration file that has the same name as your EXE, with the file extension `.config`.  So, if you're EXE's name is `RDS_Server_TrayApp_BattMon.exe`, create a new text file called `RDS_Server_TrayApp_BattMon.exe.config`, and paste [this](https://github.com/Field-Effect-LLC/RDP-BattMon/blob/master/Tray%20App%20For%20RDP-BattMon/App.config) code in it.
+On the server side, you need a configuration file that has the same name as your EXE, with the file extension `.config`.  So, if you're EXE's name is `RDS_Server_TrayApp_BattMon.exe`, create a new text file called `RDS_Server_TrayApp_BattMon.exe.config`, and paste [this](Tray%20App%20For%20RDP-BattMon/App.config) code in it.
 
 Then, change this line:
 ```
