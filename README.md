@@ -12,7 +12,7 @@ If you like to work full screen on a remote desktop connection, but you work fro
 
 Please check the [Releases](https://github.com/Field-Effect-LLC/RDP-BattMon/releases/latest) page for binary files, or build from source using Visual Studio 2017.
 
-### On the RDS Client Side ###
+### On the Remote Desktop Client Side ###
 
 In the future, I plan to make installation easier for less technical users.  For the time being, you need to install the following registry key:
 
@@ -29,7 +29,7 @@ Alternatively, you can create a Windows registry file:
 	[HKEY_CURRENT_USER\Software\Microsoft\Terminal Server Client\Default\AddIns\BattMon]
 	"Name"="C:\\path\\to\\your\\folder\\RDS_Client_Addin_BattMon.dll"
 
-### On the Remote Desktop side ###
+### On the Remote Desktop Server Side ###
 
 You need to run the `RDS_Server_TrayApp_BattMon.exe` application on the Remote Desktop side.  When it's running, you should see a battery icon on your Remote Desktop's taskbar:
 
@@ -38,6 +38,40 @@ You need to run the `RDS_Server_TrayApp_BattMon.exe` application on the Remote D
 ## Screenshot ##
 
 ![server_battery](https://raw.githubusercontent.com/Field-Effect-LLC/RDP-BattMon/master/37193691-ff51fee2-2338-11e8-8492-477d6f39c868.png)
+
+## Troubleshooting ##
+
+By default, logs are stored in `%APPDATA%\BattMon\Log.txt`, but they need to be enabled before starting.
+
+### Enable Logging on the Client Side ###
+
+The client won't begin logging until there is a file called `log4net.config` in the same folder as your client-side DLL.  Create a new text file with that name, and paste [this](https://github.com/Field-Effect-LLC/RDP-BattMon/blob/master/Client%20MSTSC%20Add-in/log4net.config) code into it.
+
+Then, change this line:
+```
+    <level value="INFO" />
+```
+to this:
+```
+    <level value="DEBUG" />
+```
+
+Once that's done, you can connect to the server using your Remote Desktop client.
+
+### Enable Logging on the Server Side ###
+
+On the server side, you need a configuration file that has the same name as your EXE, with the file extension `.config`.  So, if you're EXE's name is `RDS_Server_TrayApp_BattMon.exe`, create a new text file called `RDS_Server_TrayApp_BattMon.exe.config`, and paste [this](https://github.com/Field-Effect-LLC/RDP-BattMon/blob/master/Tray%20App%20For%20RDP-BattMon/App.config) code in it.
+
+Then, change this line:
+```
+    <level value="INFO" />
+```
+to this:
+```
+    <level value="DEBUG" />
+```
+
+Once that's done, you can start the EXE.
 
 ## Roadmap ##
 
