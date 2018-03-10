@@ -4,34 +4,38 @@ using FieldEffect.VCL.Exceptions;
 using FieldEffect.VCL.Client.WtsApi32;
 using log4net;
 using System;
-using System.IO;
-using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using Ninject;
 
 namespace FieldEffect
 {
     class Program
     {
-        private static Lazy<ILog> _iLog = new Lazy<ILog>(() =>
+        private static Program _instance = null;
+        private static ILog _log = null;
+        private IBatteryDataReporter _batteryReporter = null;
+    
+        public Program(ILog log, IBatteryDataReporter batteryDataReporter)
         {
-            return LogManager.GetLogger(typeof(Program));
-        });
+            _log = log;
+            _batteryReporter = batteryDataReporter;
 
-        private static ILog _log => _iLog.Value;
+            Application.ThreadException += (s, e) => _log.Fatal(e.Exception.ToString());
+            AppDomain.CurrentDomain.UnhandledException += (s, e) => _log.Fatal(e.ExceptionObject.ToString());
 
-        private static Lazy<Program> _instance = new Lazy<Program>();
-
-        private static Lazy<string> _dllPath = new Lazy<string>(() => {
-            return Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName;
-        });
-
-        private IBatteryDataReporter batteryReporter = null;
+            _log.Info("BattMon Remote Desktop client battery reporter started.");
+        }
 
         ~Program()
         {
             //Don't GC the batteryCommunicator until the program is done
-            GC.KeepAlive(batteryReporter);
+            GC.KeepAlive(_batteryReporter);
+
+            //TODO: We need a good place to Dispose() of batteryCommunicator.
+            //The destructor is the wrong place, but I'm not sure how
+            //else to tell when the add-in is exiting.
+            _batteryReporter.Dispose();
             _log.Info("BattMon Remote Desktop client battery reporter exited.");
         }
 
@@ -39,13 +43,8 @@ namespace FieldEffect
         {
             try
             {
-                batteryReporter = (IBatteryDataReporter)NinjectConfig.Instance.GetService(typeof(IBatteryDataReporter));
-                batteryReporter.EntryPoints = entry;
-                batteryReporter.Initialize();
-
-                //TODO: We need a good place to Dispose() of batteryCommunicator.
-                //The destructor is the wrong place, but I'm not sure how
-                //else to tell when the add-in is exiting.
+                _batteryReporter.EntryPoints = entry;
+                _batteryReporter.Initialize();
             }
             catch (VirtualChannelException e)
             {
@@ -69,11 +68,9 @@ namespace FieldEffect
         [DllExport("VirtualChannelEntry", CallingConvention.StdCall)]
         public static bool VirtualChannelEntry(ref ChannelEntryPoints entry)
         {
-            _log.Info("BattMon Remote Desktop client battery reporter started.");
-
-            Application.ThreadException += (s, e) => _log.Fatal(e.Exception.ToString());
-            AppDomain.CurrentDomain.UnhandledException += (s, e) => _log.Fatal(e.ExceptionObject.ToString());
-            return _instance.Value.Run(ref entry);
+            //Composition root
+            _instance = NinjectConfig.Instance.Get<Program>();
+            return _instance.Run(ref entry);
         }
     }
 }

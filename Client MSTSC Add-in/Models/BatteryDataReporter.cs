@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using log4net;
 
 namespace FieldEffect.Models
 {
@@ -16,11 +17,13 @@ namespace FieldEffect.Models
         IBatteryDataCollector _batteryDataCollector;
         string _data = String.Empty;
         private bool _isDisposed = false;
+        private ILog _log;
 
-        public BatteryDataReporter(IRdpClientVirtualChannel clientAddin, IBatteryDataCollector batteryDataCollector)
+        public BatteryDataReporter(ILog log, IRdpClientVirtualChannel clientAddin, IBatteryDataCollector batteryDataCollector)
         {
             _clientAddIn = clientAddin;
             _batteryDataCollector = batteryDataCollector;
+            _log = log;
 
             _clientAddIn.DataChannelEvent += _clientAddIn_DataChannelEvent;
         }
@@ -68,6 +71,7 @@ namespace FieldEffect.Models
 
             if (e.DataFlags == ChannelFlags.Last || e.DataFlags == ChannelFlags.Only)
             {
+                _log.Debug(String.Format(Properties.Resources.DebugMsgReceivedRequest, _data));
                 var request = Request.Deserialize(_data);
                 var response = new Response();
 
@@ -76,8 +80,10 @@ namespace FieldEffect.Models
                     List<IBatteryInfo> batteryInfo = new List<IBatteryInfo>(_batteryDataCollector.GetAllBatteries());
                     response.Value.Add("BatteryInfo", batteryInfo);
                 }
+                string serializedResponse = response.Serialize();
+                _log.Debug(String.Format(Properties.Resources.DebugMsgSendingBattInfo, serializedResponse));
 
-                byte[] responseBytes = Encoding.UTF8.GetBytes(response.Serialize());
+                byte[] responseBytes = Encoding.UTF8.GetBytes(serializedResponse);
                 _clientAddIn.VirtualChannelWrite(responseBytes);
             }
         }

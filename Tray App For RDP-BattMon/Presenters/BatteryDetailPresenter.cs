@@ -1,5 +1,6 @@
 ﻿using FieldEffect.Interfaces;
 using FieldEffect.VCL.Server.Interfaces;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -16,14 +17,16 @@ namespace FieldEffect.Presenters
         private IBatteryIcon _batteryIcon;
         private bool _isDisposed = false;
         private IBatteryParametersFactory _batteryParametersFactory;
+        private ILog _log;
 
         public IBatteryDetail BatteryDetailView { get; set; }
 
-        public BatteryDetailPresenter(IBatteryDataRetriever batteryDataRetriever, IBatteryIcon batteryIcon, IBatteryDetail batteryDetailView, IBatteryParametersFactory batteryParametersFactory)
+        public BatteryDetailPresenter(IBatteryDataRetriever batteryDataRetriever, IBatteryIcon batteryIcon, IBatteryDetail batteryDetailView, IBatteryParametersFactory batteryParametersFactory, ILog log)
         {
             _batteryDataRetriever = batteryDataRetriever;
             _batteryIcon = batteryIcon;
             _batteryParametersFactory = batteryParametersFactory;
+            _log = log;
 
             BatteryDetailView = batteryDetailView;
 
@@ -31,6 +34,9 @@ namespace FieldEffect.Presenters
 
             //Render the battery right away
             RenderBattery();
+
+            _log.Info(Properties.Resources.InfoMsgBattMonStart);
+
         }
 
         private void WireEvents()
@@ -123,6 +129,7 @@ namespace FieldEffect.Presenters
         public void Dispose()
         {
             Dispose(true);
+            _log.Info(Properties.Resources.InfoMsgBattMonExit);
         }
 
         protected void Dispose(bool disposing)
