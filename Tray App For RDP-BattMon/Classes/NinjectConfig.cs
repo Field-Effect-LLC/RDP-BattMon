@@ -74,6 +74,11 @@ namespace FieldEffect.Classes
             KernelInstance.Bind<ILog>().ToMethod(context =>
                 LogManager.GetLogger(context.Request.Target.Member.ReflectedType));
 
+            KernelInstance.Bind<System.Timers.Timer>()
+                .ToSelf()
+                .InSingletonScope()
+                .WithPropertyValue("AutoReset", true)
+                .WithPropertyValue("Interval", Properties.Settings.Default.PollingInterval * 1000.0);
         }
     }
 }

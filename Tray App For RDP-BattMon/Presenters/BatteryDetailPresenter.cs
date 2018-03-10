@@ -18,15 +18,17 @@ namespace FieldEffect.Presenters
         private bool _isDisposed = false;
         private IBatteryParametersFactory _batteryParametersFactory;
         private ILog _log;
+        private System.Timers.Timer _timer;
 
         public IBatteryDetail BatteryDetailView { get; set; }
 
-        public BatteryDetailPresenter(IBatteryDataRetriever batteryDataRetriever, IBatteryIcon batteryIcon, IBatteryDetail batteryDetailView, IBatteryParametersFactory batteryParametersFactory, ILog log)
+        public BatteryDetailPresenter(IBatteryDataRetriever batteryDataRetriever, IBatteryIcon batteryIcon, IBatteryDetail batteryDetailView, IBatteryParametersFactory batteryParametersFactory, ILog log, System.Timers.Timer timer)
         {
             _batteryDataRetriever = batteryDataRetriever;
             _batteryIcon = batteryIcon;
             _batteryParametersFactory = batteryParametersFactory;
             _log = log;
+            _timer = timer;
 
             BatteryDetailView = batteryDetailView;
 
@@ -35,14 +37,21 @@ namespace FieldEffect.Presenters
             //Render the battery right away
             RenderBattery();
 
+            _timer.Start();
+
             _log.Info(Properties.Resources.InfoMsgBattMonStart);
 
         }
 
         private void WireEvents()
         {
-            BatteryDetailView.RequestBatteryUpdate += BatteryDetailView_RequestBatteryUpdate;
+            _timer.Elapsed += Timer_Elapsed;
             BatteryDetailView.RequestClose += BatteryDetailView_RequestClose;
+        }
+
+        private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            RenderBattery();
         }
 
         private void BatteryDetailView_RequestClose(object sender, FormClosingEventArgs e)
@@ -55,11 +64,6 @@ namespace FieldEffect.Presenters
                 BatteryDetailView.BatteryTrayControl.BalloonTipText = Properties.Resources.MinimizedMessage;
                 BatteryDetailView.BatteryTrayControl.ShowBalloonTip(5000);
             }
-        }
-
-        private void BatteryDetailView_RequestBatteryUpdate(object sender, EventArgs e)
-        {
-            RenderBattery();
         }
 
         private string BatteryStatus(int status)
@@ -84,6 +88,14 @@ namespace FieldEffect.Presenters
 
         private void RenderBattery()
         {
+            if (BatteryDetailView.InvokeRequired)
+            {
+                BatteryDetailView.Invoke(new Action(() => {
+                    RenderBattery();
+                }));
+                return;
+            }
+
             List<IBatteryInfo> batteryInfo = new List<IBatteryInfo>(_batteryDataRetriever.BatteryInfo);
 
             //TODO: Count() method is probably going to be slow. Rethink the Batteries::IEnumerable?
@@ -138,7 +150,11 @@ namespace FieldEffect.Presenters
             {
                 if (!_isDisposed)
                 {
-                    _batteryIcon.Dispose();
+                    if (_batteryIcon != null)
+                        _batteryIcon.Dispose();
+
+                    if (_timer != null)
+                        _timer.Dispose();
                 }
                 _isDisposed = true;
             }

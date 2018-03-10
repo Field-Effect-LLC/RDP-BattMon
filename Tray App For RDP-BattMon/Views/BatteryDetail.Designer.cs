@@ -34,7 +34,6 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label2 = new System.Windows.Forms.Label();
             this.RdpClientName = new System.Windows.Forms.Label();
-            this.PollTimer = new System.Windows.Forms.Timer(this.components);
             this.label5 = new System.Windows.Forms.Label();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.RdpTotalEstCharge = new System.Windows.Forms.Label();
@@ -55,12 +54,12 @@
             this.TrayMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.exitToolStripMenuItem});
             this.TrayMenuStrip.Name = "TrayMenuStrip";
-            this.TrayMenuStrip.Size = new System.Drawing.Size(128, 40);
+            this.TrayMenuStrip.Size = new System.Drawing.Size(245, 84);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(127, 36);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(244, 36);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
@@ -82,12 +81,6 @@
             this.RdpClientName.Size = new System.Drawing.Size(113, 29);
             this.RdpClientName.TabIndex = 2;
             this.RdpClientName.Text = "Unknown";
-            // 
-            // PollTimer
-            // 
-            this.PollTimer.Enabled = true;
-            this.PollTimer.Interval = 10000;
-            this.PollTimer.Tick += new System.EventHandler(this.PollTimer_Tick);
             // 
             // label5
             // 
@@ -163,7 +156,6 @@
         private System.Windows.Forms.NotifyIcon BatteryTray;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label RdpClientName;
-        private System.Windows.Forms.Timer PollTimer;
         private System.Windows.Forms.ContextMenuStrip TrayMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Label label5;
