@@ -16,7 +16,6 @@ namespace FieldEffect.Views
 {
     public partial class BatteryDetail : Form, IBatteryDetail
     {
-        public event EventHandler<EventArgs> RequestBatteryUpdate;
         public event EventHandler<FormClosingEventArgs> RequestClose;
 
         protected Lazy<List<IBatteryParameters>> _batteryParameters =
@@ -77,11 +76,6 @@ namespace FieldEffect.Views
             BatteryDetailPanel.Controls.Add(battView);
         }
 
-        protected void OnRequestBatteryData(EventArgs args)
-        {
-            RequestBatteryUpdate?.Invoke(this, args);
-        }
-
         public int TotalEstimatedCharge
         {
             get { return _totalEstimatedCharge; }
@@ -95,11 +89,6 @@ namespace FieldEffect.Views
         protected void OnRequestClose(FormClosingEventArgs args)
         {
             RequestClose?.Invoke(this, args);
-        }
-
-        private void PollTimer_Tick(object sender, EventArgs e)
-        {
-            OnRequestBatteryData(EventArgs.Empty);
         }
 
         private void BatteryTray_DoubleClick(object sender, EventArgs e)

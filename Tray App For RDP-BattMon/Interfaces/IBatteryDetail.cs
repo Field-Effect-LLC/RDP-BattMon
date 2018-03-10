@@ -15,8 +15,9 @@ namespace FieldEffect.Interfaces
         int TotalEstimatedCharge { get; set; }
         void AddBattery(IBatteryParameters parametersView);
         void ClearBatteries();
+        bool InvokeRequired { get; }
+        object Invoke(Delegate method, params object[] args);
 
-        event EventHandler<EventArgs> RequestBatteryUpdate;
         event EventHandler<FormClosingEventArgs> RequestClose;
     }
 }
