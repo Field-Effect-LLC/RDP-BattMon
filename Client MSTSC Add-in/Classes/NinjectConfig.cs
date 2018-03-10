@@ -7,6 +7,11 @@ using Ninject.Modules;
 using System;
 using FieldEffect.VCL.Client.Interfaces;
 using FieldEffect.VCL.Client;
+using log4net.Config;
+using System.IO;
+using System.Reflection;
+using log4net.Repository.Hierarchy;
+using log4net.Core;
 
 namespace FieldEffect.Classes
 {
@@ -33,6 +38,24 @@ namespace FieldEffect.Classes
         }
         public override void Load()
         {
+            //Configure the log here because this section will
+            //get called once on startup, before the ILog instance
+            //gets created.
+            //
+            //The client will only log if there is a log4net.config
+            //file in the same folder as the DLL.
+            string path = Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName;
+            string log4NetConfig = Path.Combine(path, Properties.Resources.Log4NetConfig);
+            if (File.Exists(log4NetConfig))
+            {
+                XmlConfigurator.Configure(new FileInfo(log4NetConfig));
+            }
+            else
+            {
+                //No config file.  Turn logging off.
+                Hierarchy hierarchy = (Hierarchy)LogManager.GetRepository();
+                hierarchy.Root.Level = Level.Off;
+            }
             KernelInstance.Bind<IRdpClientVirtualChannel>()
                 .To<RdpClientVirtualChannel>()
                 .InSingletonScope()
