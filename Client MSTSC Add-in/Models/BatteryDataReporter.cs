@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using log4net;
+using FieldEffect.VCL.Exceptions;
 
 namespace FieldEffect.Models
 {
@@ -84,7 +85,17 @@ namespace FieldEffect.Models
                 _log.Debug(String.Format(Properties.Resources.DebugMsgSendingBattInfo, serializedResponse));
 
                 byte[] responseBytes = Encoding.UTF8.GetBytes(serializedResponse);
-                _clientAddIn.VirtualChannelWrite(responseBytes);
+
+                try
+                {
+                    _clientAddIn.VirtualChannelWrite(responseBytes);
+                }
+                catch(VirtualChannelException vce)
+                {
+                    //If we don't write the response, the client
+                    //probably fell asleep. This isn't a fatal error.
+                    _log.Warn(vce.ToString());
+                }
             }
         }
     }
