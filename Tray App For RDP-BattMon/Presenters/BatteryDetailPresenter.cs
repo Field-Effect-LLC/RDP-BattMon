@@ -109,16 +109,27 @@ namespace FieldEffect.Presenters
                 }
             }
 
-            int i = 0; double totalBattery = 0; double totalPercent = 0;
-            foreach (var battery in BatteryDetailView.Batteries)
+            //GitHub #20 - somehow the batteryInfo array can become
+            //out of sync with the BatteryDetailView.Batteries IEnumerable,
+            //even though they're being synced above.
+            //Using the length of the battInfo array as the indexer,
+            //and queuing the battery view elements should help, but
+            //we should get to the root cause.
+            double totalBattery = 0; double totalPercent = 0;
+            var batteryQueue = new Queue<IBatteryParameters>(BatteryDetailView.Batteries);
+            for (int battIdx = 0; battIdx < batteryInfo.Count; battIdx++)
             {
-                battery.BatteryStatus = BatteryStatus(batteryInfo[i].BatteryStatus);
-                battery.ClientEstRuntime = new TimeSpan(0,0,batteryInfo[i].EstimatedRunTime).ToString();
-                battery.EstimatedChargeRemaining = batteryInfo[i].EstimatedChargeRemaining;
-                battery.BatteryName = String.Format(Properties.Resources.BatteryName, i+1);
-                totalBattery += batteryInfo[i].EstimatedChargeRemaining;
-                totalPercent += 100;
-                i++;
+                
+                if (batteryQueue.Count > 0)
+                {
+                    IBatteryParameters battery = batteryQueue.Dequeue();
+                    battery.BatteryStatus = BatteryStatus(batteryInfo[battIdx].BatteryStatus);
+                    battery.ClientEstRuntime = new TimeSpan(0, 0, batteryInfo[battIdx].EstimatedRunTime).ToString();
+                    battery.EstimatedChargeRemaining = batteryInfo[battIdx].EstimatedChargeRemaining;
+                    battery.BatteryName = String.Format(Properties.Resources.BatteryName, battIdx + 1);
+                    totalBattery += batteryInfo[battIdx].EstimatedChargeRemaining;
+                    totalPercent += 100;
+                }
             }
 
             if (batteryInfo.Count > 0)
