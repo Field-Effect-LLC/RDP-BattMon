@@ -31,7 +31,7 @@ namespace FieldEffect.Models
                 catch(Exception e)
                 {
                     //Log the exception
-                    _log.Error(e.ToString());
+                    _log.Warn(e.ToString());
                     //Return empty list
                     return new List<IBatteryInfo>();
                 }
