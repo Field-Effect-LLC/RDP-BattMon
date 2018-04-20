@@ -117,50 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BatteryName" xml:space="preserve">
-    <value>Battery #{0}</value>
+  <data name="DebugMsgReceivedRequest" xml:space="preserve">
+    <value>Received Request for Battery Info.  Serialized Response: {0}</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="BattLevel" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\BattLevel.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="DebugMsgSendingBattInfo" xml:space="preserve">
+    <value>Sending Battery Info.  Serialized Request: {0}</value>
   </data>
-  <data name="MinimizedMessage" xml:space="preserve">
-    <value>The BattMon remote battery monitor is still running in the background.  To exit, right-click on this icon, and choose "Exit".</value>
-  </data>
-  <data name="MinimizedTitle" xml:space="preserve">
-    <value>BattMon has been minimized</value>
-  </data>
-  <data name="RemoteBatteryText" xml:space="preserve">
-    <value>Remote Battery: {0}%</value>
-  </data>
-  <data name="RemoteBatteryUnknown" xml:space="preserve">
-    <value>Remote Batt Level Unknown</value>
-  </data>
-  <data name="SourceCode" xml:space="preserve">
-    <value>https://github.com/Field-Effect-LLC/RDP-BattMon</value>
-  </data>
-  <data name="Unknown" xml:space="preserve">
-    <value>Unknown</value>
-  </data>
-  <data name="NoBatt" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\NoBatt.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="NoBattFound" xml:space="preserve">
-    <value>No remote batteries found.</value>
-  </data>
-  <data name="UnkBatt" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\UnkBatt.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="DebugMsgReceivedBattInfo" xml:space="preserve">
-    <value>Received Battery Info.  Serialized Response: {0}</value>
-  </data>
-  <data name="DebugMsgRequestingBattInfo" xml:space="preserve">
-    <value>Requesting Battery Info.  Serialized Request: {0}</value>
-  </data>
-  <data name="InfoMsgBattMonExit" xml:space="preserve">
-    <value>BattMon server-side component exiting.</value>
-  </data>
-  <data name="InfoMsgBattMonStart" xml:space="preserve">
-    <value>BattMon server-side component has started.</value>
+  <data name="Log4NetConfig" xml:space="preserve">
+    <value>log4net.config</value>
   </data>
 </root>
