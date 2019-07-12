@@ -17,6 +17,8 @@ Please check the [Releases](https://github.com/Field-Effect-LLC/RDP-BattMon/rele
 In the future, I plan to make installation easier for less technical users.  For the time being, you need to install the following registry key:
 
 	HKEY_CURRENT_USER\Software\Microsoft\Terminal Server Client\Default\AddIns\BattMon
+	
+___Note___ `regedit.exe` must be run as a standard user, not as an administrator, or mstsc will not detect the key when it is run as a standard user.
 
 Then, add a string value to the `BattMon` Key:
 
