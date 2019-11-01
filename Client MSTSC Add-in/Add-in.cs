@@ -14,7 +14,7 @@ namespace FieldEffect
     {
         private static Program _instance = null;
         private static ILog _log = null;
-        private IBatteryDataReporter _batteryReporter = null;
+        private readonly IBatteryDataReporter _batteryReporter = null;
     
         public Program(ILog log, IBatteryDataReporter batteryDataReporter)
         {
